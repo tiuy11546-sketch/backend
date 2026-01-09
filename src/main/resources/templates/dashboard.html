@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title>Dashboard - Java Security App</title>
+</head>
+<body>
+
+<div layout:fragment="content">
+    <!-- Container-fluid starts-->
+    <div class="container-fluid">
+        <div class="page-header">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="page-header-left">
+                        <h3>Dashboard
+                            <small>Java Security Admin Panel</small>
+                        </h3>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <ol class="breadcrumb pull-right">
+                        <li class="breadcrumb-item">
+                            <a th:href="@{/}">
+                                <i data-feather="home"></i>
+                            </a>
+                        </li>
+                        <li class="breadcrumb-item active">Dashboard</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Container-fluid Ends-->
+
+    <!-- Container-fluid starts-->
+    <div class="container-fluid">
+        <div class="row">
+            <!-- Security Stats Cards -->
+            <div class="col-xxl-3 col-md-6 xl-50">
+                <div class="card o-hidden">
+                    <div class="warning-box card-body">
+                        <div class="media static-top-widget align-items-center">
+                            <div class="icons-widgets">
+                                <div class="align-self-center text-center">
+                                    <i data-feather="shield" class="font-warning"></i>
+                                </div>
+                            </div>
+                            <div class="media-body media-doller">
+                                <span class="m-0">Total Users</span>
+                                <h3 class="mb-0"><span class="counter" th:text="${totalUsers}">0</span></h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xxl-3 col-md-6 xl-50">
+                <div class="card o-hidden">
+                    <div class="primary-box card-body">
+                        <div class="media static-top-widget align-items-center">
+                            <div class="icons-widgets">
+                                <div class="align-self-center text-center">
+                                    <i data-feather="user-check" class="font-primary"></i>
+                                </div>
+                            </div>
+                            <div class="media-body media-doller">
+                                <span class="m-0">Active Sessions</span>
+                                <h3 class="mb-0"><span class="counter" th:text="${activeSessions}">0</span></h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xxl-3 col-md-6 xl-50">
+                <div class="card o-hidden">
+                    <div class="success-box card-body">
+                        <div class="media static-top-widget align-items-center">
+                            <div class="icons-widgets">
+                                <div class="align-self-center text-center">
+                                    <i data-feather="alert-triangle" class="font-success"></i>
+                                </div>
+                            </div>
+                            <div class="media-body media-doller">
+                                <span class="m-0">Security Events</span>
+                                <h3 class="mb-0"><span class="counter" th:text="${securityEvents}">0</span></h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xxl-3 col-md-6 xl-50">
+                <div class="card o-hidden">
+                    <div class="danger-box card-body">
+                        <div class="media static-top-widget align-items-center">
+                            <div class="icons-widgets">
+                                <div class="align-self-center text-center">
+                                    <i data-feather="lock" class="font-danger"></i>
+                                </div>
+                            </div>
+                            <div class="media-body media-doller">
+                                <span class="m-0">Failed Logins</span>
+                                <h3 class="mb-0"><span class="counter" th:text="${failedLogins}">0</span></h3>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Additional Dashboard Content -->
+        <div class="row">
+            <div class="col-lg-8">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Security Overview</h5>
+                    </div>
+                    <div class="card-body">
+                        <div id="security-chart"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="card">
+                    <div class="card-header">
+                        <h5>Recent Activities</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="activity-table table-responsive">
+                            <table class="table table-bordernone">
+                                <tbody>
+                                <tr th:each="activity : ${recentActivities}">
+                                    <td>
+                                        <div class="activity-details">
+                                            <h5 th:text="${activity.type}">Login</h5>
+                                            <span th:text="${activity.description}">User logged in successfully</span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <span class="badge badge-success" th:text="${activity.time}">2 min ago</span>
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Container-fluid Ends-->
+</div>
+
+<div layout:fragment="scripts">
+    <script>
+        // Initialize dashboard charts and components
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize counters
+            $('.counter').counterUp({
+                delay: 10,
+                time: 1000
+            });
+
+            // Initialize security chart
+            var options = {
+                series: [{
+                    name: 'Security Events',
+                    data: [30, 40, 35, 50, 49, 60, 70, 91, 125]
+                }],
+                chart: {
+                    type: 'line',
+                    height: 350
+                },
+                xaxis: {
+                    categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep']
+                }
+            };
+
+            var chart = new ApexCharts(document.querySelector("#security-chart"), options);
+            chart.render();
+        });
+    </script>
+</div>
+
+</body>
+</html>

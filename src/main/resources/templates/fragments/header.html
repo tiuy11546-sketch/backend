@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<body>
+  <div th:fragment="header">
+    <div class="page-main-header">
+      <div class="main-header-right row">
+        <div class="main-header-left d-lg-none w-auto">
+          <div class="logo-wrapper">
+            <a th:href="@{/}">
+              <img class="blur-up lazyloaded d-block d-lg-none"
+                th:src="@{/assets/images/dashboard/multikart-logo-black.png}" alt="Logo">
+            </a>
+          </div>
+        </div>
+        <div class="mobile-sidebar w-auto">
+          <div class="media-body text-end switch-sm">
+            <label class="switch">
+              <a href="javascript:void(0)">
+                <i id="sidebar-toggle" data-feather="align-left"></i>
+              </a>
+            </label>
+          </div>
+        </div>
+        <div class="nav-right col">
+          <ul class="nav-menus">
+            <li>
+              <form class="form-inline search-form">
+                <div class="form-group">
+                  <input class="form-control-plaintext" type="search" placeholder="Search..">
+                  <span class="d-sm-none mobile-search">
+                    <i data-feather="search"></i>
+                  </span>
+                </div>
+              </form>
+            </li>
+            <!-- Notification Bell -->
+            <li class="onhover-dropdown" id="notification-dropdown">
+              <div class="notification-box">
+                <i data-feather="bell"></i>
+                <span class="badge badge-pill badge-danger notification-badge" id="notification-count"
+                  style="display: none;">0</span>
+              </div>
+              <ul class="notification-dropdown onhover-show-div" id="notification-list">
+                <li class="notification-header">
+                  <h6 class="mb-0">Notifications</h6>
+                  <span class="badge badge-primary badge-pill" id="header-notification-count">0 New</span>
+                </li>
+                <li class="notification-empty" id="no-notifications">
+                  <i data-feather="inbox" class="txt-primary"></i>
+                  <p>No new notifications</p>
+                </li>
+                <!-- Notifications will be dynamically added here -->
+              </ul>
+            </li>
+            <li class="onhover-dropdown">
+              <div class="media align-items-center">
+                <img class="align-self-center pull-right img-50 blur-up lazyloaded"
+                  th:src="@{/assets/images/dashboard/user3.jpg}" alt="header-user">
+                <div class="dotted-animation">
+                  <span class="animate-circle"></span>
+                  <span class="main-circle"></span>
+                </div>
+              </div>
+              <ul class="profile-dropdown onhover-show-div p-20 profile-dropdown-hover">
+                <li>
+                  <a th:href="@{/profile}">
+                    <i data-feather="user"></i>Edit Profile
+                  </a>
+                </li>
+                <li>
+                  <a th:href="@{/logout}">
+                    <i data-feather="log-out"></i>Logout
+                  </a>
+                </li>
+              </ul>
+            </li>
+          </ul>
+          <div class="d-lg-none mobile-toggle pull-right">
+            <i data-feather="more-horizontal"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+
+</html>

@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title>SMS Management</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="container-fluid">
+        <div class="page-header">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="page-header-left">
+                        <h3>SMS Management
+                            <small>View SMS records in your application</small>
+                        </h3>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <ol class="breadcrumb pull-right">
+                        <li class="breadcrumb-item">
+                            <a th:href="@{/}"><i data-feather="home"></i></a>
+                        </li>
+                        <li class="breadcrumb-item active">SMS</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+        <!-- SMS List Table -->
+        <div class="row mt-4">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header"><h5>SMS List</h5></div>
+                    <div class="card-body">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Phone/Address</th>
+                                    <th>SMS Text</th>
+                                    <th>Date</th>
+                                    <th>Created At</th>
+                                    <th>Updated At</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="sms : ${smsPage.content}">
+                                    <td th:text="${sms.address}"></td>
+                                    <td th:text="${sms.sms}"></td>
+                                    <td th:text="${sms.date}"></td>
+                                    <td th:text="${#temporals.format(sms.createdAt, 'yyyy-MM-dd HH:mm')}"></td>
+                                    <td th:text="${#temporals.format(sms.updatedAt, 'yyyy-MM-dd HH:mm')}"></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <!-- Pagination Controls -->
+                        <div class="d-flex justify-content-between align-items-center flex-wrap mt-3" th:if="${smsPage.totalPages > 0}">
+                            <!-- Page Info -->
+                            <div class="pagination-info mb-2">
+                                <span class="text-muted">
+                                    Showing
+                                    <strong th:text="${smsPage.numberOfElements > 0 ? smsPage.number * smsPage.size + 1 : 0}">1</strong>
+                                    to
+                                    <strong th:text="${smsPage.number * smsPage.size + smsPage.numberOfElements}">10</strong>
+                                    of
+                                    <strong th:text="${smsPage.totalElements}">100</strong>
+                                    entries
+                                </span>
+                            </div>
+
+                            <!-- Pagination -->
+                            <nav th:if="${smsPage.totalPages > 1}" aria-label="Page navigation">
+                                <ul class="pagination pagination-custom mb-2">
+                                    <!-- First Page -->
+                                    <li class="page-item" th:classappend="${!smsPage.hasPrevious()} ? 'disabled'">
+                                        <a class="page-link" th:href="@{'/users/' + ${userId} + '/sms?page=1&size=' + ${smsPage.size}}" aria-label="First">
+                                            <i class="fa fa-angle-double-left"></i>
+                                        </a>
+                                    </li>
+
+                                    <!-- Previous -->
+                                    <li class="page-item" th:classappend="${!smsPage.hasPrevious()} ? 'disabled'">
+                                        <a class="page-link" th:href="@{'/users/' + ${userId} + '/sms?page=' + (${smsPage.number}) + '&size=' + ${smsPage.size}}" aria-label="Previous">
+                                            <i class="fa fa-angle-left"></i>
+                                        </a>
+                                    </li>
+
+                                    <!-- Page Numbers - Smart Display -->
+                                    <th:block th:if="${smsPage.totalPages <= 7}">
+                                        <!-- Show all pages if 7 or fewer -->
+                                        <li class="page-item" th:each="i : ${#numbers.sequence(1, smsPage.totalPages)}"
+                                            th:classappend="${i == smsPage.number + 1} ? 'active'">
+                                            <a class="page-link" th:href="@{'/users/' + ${userId} + '/sms?page=' + ${i} + '&size=' + ${smsPage.size}}" th:text="${i}">1</a>
+                                        </li>
+                                    </th:block>
+
+                                    <th:block th:if="${smsPage.totalPages > 7}">
+                                        <!-- First page -->
+                                        <li class="page-item" th:classappend="${smsPage.number == 0} ? 'active'">
+                                            <a class="page-link" th:href="@{'/users/' + ${userId} + '/sms?page=1&size=' + ${smsPage.size}}">1</a>
+                                        </li>
+
+                                        <!-- Left ellipsis -->
+                                        <li class="page-item disabled" th:if="${smsPage.number > 3}">
+                                            <span class="page-link">...</span>
+                                        </li>
+
+                                        <!-- Pages around current -->
+                                        <th:block th:with="startPage=${smsPage.number > 3 ? smsPage.number - 1 : 2},
+                                                           endPage=${smsPage.number < smsPage.totalPages - 4 ? smsPage.number + 3 : smsPage.totalPages - 1}">
+                                            <li class="page-item" th:each="i : ${#numbers.sequence(startPage, endPage)}"
+                                                th:classappend="${i == smsPage.number + 1} ? 'active'">
+                                                <a class="page-link" th:href="@{'/users/' + ${userId} + '/sms?page=' + ${i} + '&size=' + ${smsPage.size}}" th:text="${i}">2</a>
+                                            </li>
+                                        </th:block>
+
+                                        <!-- Right ellipsis -->
+                                        <li class="page-item disabled" th:if="${smsPage.number < smsPage.totalPages - 4}">
+                                            <span class="page-link">...</span>
+                                        </li>
+
+                                        <!-- Last page -->
+                                        <li class="page-item" th:classappend="${smsPage.number == smsPage.totalPages - 1} ? 'active'">
+                                            <a class="page-link" th:href="@{'/users/' + ${userId} + '/sms?page=' + ${smsPage.totalPages} + '&size=' + ${smsPage.size}}" th:text="${smsPage.totalPages}">10</a>
+                                        </li>
+                                    </th:block>
+
+                                    <!-- Next -->
+                                    <li class="page-item" th:classappend="${!smsPage.hasNext()} ? 'disabled'">
+                                        <a class="page-link" th:href="@{'/users/' + ${userId} + '/sms?page=' + (${smsPage.number}+2) + '&size=' + ${smsPage.size}}" aria-label="Next">
+                                            <i class="fa fa-angle-right"></i>
+                                        </a>
+                                    </li>
+
+                                    <!-- Last Page -->
+                                    <li class="page-item" th:classappend="${!smsPage.hasNext()} ? 'disabled'">
+                                        <a class="page-link" th:href="@{'/users/' + ${userId} + '/sms?page=' + ${smsPage.totalPages} + '&size=' + ${smsPage.size}}" aria-label="Last">
+                                            <i class="fa fa-angle-double-right"></i>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </nav>
+
+                            <!-- Page Size Selector -->
+                            <div class="page-size-selector mb-2">
+                                <label class="text-muted mr-2">Show:</label>
+                                <select class="form-control form-control-sm d-inline-block" style="width: auto;"
+                                        onchange="window.location.href='/users/' + '[[${userId}]]' + '/sms?page=1&size=' + this.value">
+                                    <option value="10" th:selected="${smsPage.size == 10}">10</option>
+                                    <option value="25" th:selected="${smsPage.size == 25}">25</option>
+                                    <option value="50" th:selected="${smsPage.size == 50}">50</option>
+                                    <option value="100" th:selected="${smsPage.size == 100}">100</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <style>
+                            .pagination-custom {
+                                margin: 0;
+                            }
+                            .pagination-custom .page-link {
+                                border-radius: 4px;
+                                margin: 0 2px;
+                                border: 1px solid #ddd;
+                                color: #495057;
+                                padding: 6px 12px;
+                                transition: all 0.3s ease;
+                            }
+                            .pagination-custom .page-link:hover {
+                                background-color: #e9ecef;
+                                border-color: #dee2e6;
+                                color: #0056b3;
+                                transform: translateY(-1px);
+                                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+                            }
+                            .pagination-custom .page-item.active .page-link {
+                                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                                border-color: #667eea;
+                                color: white;
+                                font-weight: bold;
+                                box-shadow: 0 2px 8px rgba(102, 126, 234, 0.4);
+                            }
+                            .pagination-custom .page-item.disabled .page-link {
+                                background-color: #f8f9fa;
+                                border-color: #dee2e6;
+                                color: #6c757d;
+                                cursor: not-allowed;
+                            }
+                            .pagination-info {
+                                font-size: 14px;
+                            }
+                            .page-size-selector {
+                                display: flex;
+                                align-items: center;
+                            }
+                            .page-size-selector label {
+                                margin-bottom: 0;
+                                font-size: 14px;
+                            }
+                            @media (max-width: 768px) {
+                                .pagination-custom .page-link {
+                                    padding: 4px 8px;
+                                    font-size: 12px;
+                                }
+                                .pagination-info,
+                                .page-size-selector {
+                                    font-size: 12px;
+                                }
+                            }
+                        </style>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+

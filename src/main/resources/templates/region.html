@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title>Region Management</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="container-fluid">
+        <div class="page-header">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="page-header-left">
+                        <h3>Region Management
+                            <small>Manage regions in your application</small>
+                        </h3>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <ol class="breadcrumb pull-right">
+                        <li class="breadcrumb-item">
+                            <a th:href="@{/}"><i data-feather="home"></i></a>
+                        </li>
+                        <li class="breadcrumb-item active">Regions</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+        <!-- Create Region Form -->
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header"><h5>Create Region</h5></div>
+                    <div class="card-body">
+                        <form th:action="@{/regions}" th:object="${regionRequestDto}" method="post">
+                            <div class="form-group">
+                                <label for="name">Name:</label>
+                                <input type="text" id="name" th:field="*{name}" class="form-control" placeholder="Enter region name" />
+                                <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="error"></span>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Create Region</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <!-- Edit Region Form (shown only if editing) -->
+            <div class="col-md-6" th:if="${editRegion}">
+                <div class="card">
+                    <div class="card-header"><h5>Edit Region</h5></div>
+                    <div class="card-body">
+                        <form th:action="@{'/regions/update/' + ${editRegion.id}}" th:object="${editRegionRequestDto}" method="post">
+                            <div class="form-group">
+                                <label for="editName">Name:</label>
+                                <input type="text" id="editName" th:field="*{name}" class="form-control" placeholder="Edit region name" />
+                                <span th:if="${#fields.hasErrors('name')}" th:errors="*{name}" class="error"></span>
+                            </div>
+                            <button type="submit" class="btn btn-warning">Update Region</button>
+                            <a th:href="@{/regions}" class="btn btn-secondary" style="margin-left:10px;">Cancel</a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Region List Table -->
+        <div class="row mt-4">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header"><h5>Region List</h5></div>
+                    <div class="card-body">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Created At</th>
+                                    <th>Updated At</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="region : ${regions.content}">
+                                    <td th:text="${region.name}"></td>
+                                    <td th:text="${#temporals.format(region.createdAt, 'yyyy-MM-dd HH:mm')}"></td>
+                                    <td th:text="${#temporals.format(region.updatedAt, 'yyyy-MM-dd HH:mm')}"></td>
+                                    <td>
+                                        <a th:href="@{'/regions/edit/' + ${region.id} + '?page=' + ${regions.number} + '&size=' + ${regions.size}}" class="btn btn-sm btn-info">Edit</a>
+                                        <form th:action="@{'/regions/delete/' + ${region.id}}" method="post" style="display:inline;">
+                                            <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Delete this region?');">Delete</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <!-- Pagination Controls -->
+                        <nav th:if="${regions.totalPages > 1}">
+                            <ul class="pagination">
+                                <li class="page-item" th:classappend="${!regions.hasPrevious()} ? 'disabled'">
+                                    <a class="page-link" th:href="@{'/regions?page=' + (${regions.number} - 1) + '&size=' + ${regions.size}}">Previous</a>
+                                </li>
+                                <li class="page-item" th:each="i : ${#numbers.sequence(0, regions.totalPages - 1)}" th:classappend="${i == regions.number} ? 'active'">
+                                    <a class="page-link" th:href="@{'/regions?page=' + ${i} + '&size=' + ${regions.size}}" th:text="${i + 1}"></a>
+                                </li>
+                                <li class="page-item" th:classappend="${!regions.hasNext()} ? 'disabled'">
+                                    <a class="page-link" th:href="@{'/regions?page=' + (${regions.number} + 1) + '&size=' + ${regions.size}}">Next</a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    .error { color: red; }
+</style>
+</body>
+</html>

@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Java Application Security - Enterprise Security Solutions">
+    <meta name="keywords" content="security, java, spring boot, enterprise security, authentication">
+    <meta name="author" content="Your Company">
+    <link rel="icon" th:href="@{/assets/images/dashboard/favicon.png}" type="image/x-icon">
+    <link rel="shortcut icon" th:href="@{/assets/images/dashboard/favicon.png}" type="image/x-icon">
+    <title>Java Security App - Enterprise Security Solutions</title>
+
+    <!-- Google font-->
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Work+Sans:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,500;1,600;1,700;1,800;1,900&display=swap">
+    <link rel="stylesheet"
+          href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap">
+
+    <!-- Font Awesome-->
+    <link rel="stylesheet" type="text/css" th:href="@{/assets/css/vendors/font-awesome.css}">
+
+    <!-- Flag icon-->
+    <link rel="stylesheet" type="text/css" th:href="@{/assets/css/vendors/themify-icons.css}">
+
+    <!-- slick icon-->
+    <link rel="stylesheet" type="text/css" th:href="@{/assets/css/vendors/slick.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/assets/css/vendors/slick-theme.css}">
+
+    <!-- Bootstrap css-->
+    <link rel="stylesheet" type="text/css" th:href="@{/assets/css/vendors/bootstrap.css}">
+
+    <!-- App css-->
+    <link rel="stylesheet" type="text/css" th:href="@{/assets/css/style.css}">
+
+    <style>
+        .hero-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 120px 0;
+            text-align: center;
+        }
+        .feature-card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        .nav-link {
+            color: #333;
+            font-weight: 500;
+        }
+        .nav-link:hover {
+            color: #667eea;
+        }
+        .cta-section {
+            background: #f8f9fa;
+            padding: 80px 0;
+        }
+        .stats-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 60px 0;
+        }
+        .stat-number {
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- Navigation -->
+<nav class="navbar navbar-expand-lg navbar-light bg-white shadow-sm fixed-top">
+    <div class="container">
+        <a class="navbar-brand fw-bold" th:href="@{/}">
+            <i data-feather="shield" class="me-2 text-primary"></i>
+            Java Security App
+        </a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="#features">Features</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#about">About</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#contact">Contact</a>
+                </li>
+                <li class="nav-item ms-2">
+                    <a class="btn btn-primary" th:href="@{/login}">
+                        <i data-feather="log-in" class="me-1"></i>Login
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-8 mx-auto">
+                <h1 class="display-4 fw-bold mb-4">Enterprise Grade Security Solutions</h1>
+                <p class="lead mb-4 text-white">Protect your applications with our comprehensive Java-based security platform. Advanced threat protection, real-time monitoring, and comprehensive audit logs to keep your business secure.</p>
+                <div class="d-flex gap-3 justify-content-center flex-wrap">
+                    <a th:href="@{/login}" class="btn btn-light btn-lg">
+                        <i data-feather="log-in" class="me-2"></i>Get Started
+                    </a>
+                    <a href="#features" class="btn btn-outline-light btn-lg">
+                        <i data-feather="info" class="me-2"></i>Learn More
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Stats Section -->
+<section class="stats-section">
+    <div class="container">
+        <div class="row text-center">
+            <div class="col-md-3">
+                <div class="stat-number">500+</div>
+                <p>Enterprise Clients</p>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-number">99.9%</div>
+                <p>Uptime Guarantee</p>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-number">24/7</div>
+                <p>Security Monitoring</p>
+            </div>
+            <div class="col-md-3">
+                <div class="stat-number">100M+</div>
+                <p>Events Processed Daily</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Features Section -->
+<section id="features" class="py-5">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="fw-bold">Why Choose Our Security Platform?</h2>
+            <p class="lead text-muted">Comprehensive security features for modern applications</p>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card feature-card h-100">
+                    <div class="card-body text-center p-4">
+                        <i data-feather="lock" class="feature-icon text-primary"></i>
+                        <h5 class="card-title">Advanced Authentication</h5>
+                        <p class="card-text">Multi-factor authentication, OAuth2, and secure login systems to protect user accounts with enterprise-grade security protocols.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card feature-card h-100">
+                    <div class="card-body text-center p-4">
+                        <i data-feather="activity" class="feature-icon text-success"></i>
+                        <h5 class="card-title">Real-time Monitoring</h5>
+                        <p class="card-text">Monitor security events in real-time with comprehensive dashboards, alerts, and automated threat detection systems.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card feature-card h-100">
+                    <div class="card-body text-center p-4">
+                        <i data-feather="bar-chart-2" class="feature-icon text-info"></i>
+                        <h5 class="card-title">Detailed Analytics</h5>
+                        <p class="card-text">Get insights into security patterns with advanced analytics, custom reports, and actionable intelligence dashboards.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card feature-card h-100">
+                    <div class="card-body text-center p-4">
+                        <i data-feather="users" class="feature-icon text-warning"></i>
+                        <h5 class="card-title">Role-based Access</h5>
+                        <p class="card-text">Granular access control with customizable roles and permissions to ensure the right people have the right access.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card feature-card h-100">
+                    <div class="card-body text-center p-4">
+                        <i data-feather="shield" class="feature-icon text-danger"></i>
+                        <h5 class="card-title">Compliance Ready</h5>
+                        <p class="card-text">Meet regulatory requirements with built-in compliance frameworks and audit trails for various industry standards.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card feature-card h-100">
+                    <div class="card-body text-center p-4">
+                        <i data-feather="cloud" class="feature-icon text-secondary"></i>
+                        <h5 class="card-title">Cloud Native</h5>
+                        <p class="card-text">Deploy anywhere with our cloud-native architecture supporting hybrid, multi-cloud, and on-premises environments.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- About Section -->
+<section id="about" class="py-5 bg-light">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <h2 class="fw-bold mb-4">About Java Security App</h2>
+                <p class="lead mb-4">We provide enterprise-grade security solutions built on modern Java technologies and Spring Boot framework.</p>
+                <p>Our platform is trusted by businesses worldwide to protect their critical applications and data. With years of experience in cybersecurity, we deliver robust, scalable, and reliable security solutions.</p>
+                <ul class="list-unstyled">
+                    <li class="mb-2"><i data-feather="check" class="text-success me-2"></i>Built on Spring Security</li>
+                    <li class="mb-2"><i data-feather="check" class="text-success me-2"></i>Enterprise-grade performance</li>
+                    <li class="mb-2"><i data-feather="check" class="text-success me-2"></i>24/7 support and monitoring</li>
+                    <li class="mb-2"><i data-feather="check" class="text-success me-2"></i>Regular security updates</li>
+                </ul>
+            </div>
+            <div class="col-lg-6">
+                <div class="text-center">
+                    <i data-feather="award" style="width: 200px; height: 200px;" class="text-primary"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Call to Action Section -->
+<section class="cta-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto text-center">
+                <h2 class="fw-bold mb-3">Ready to Secure Your Applications?</h2>
+                <p class="lead mb-4">Join thousands of enterprises that trust our security platform to protect their digital assets.</p>
+                <div class="d-flex gap-3 justify-content-center flex-wrap">
+                    <a th:href="@{/login}" class="btn btn-primary btn-lg">
+                        <i data-feather="log-in" class="me-2"></i>Login to Dashboard
+                    </a>
+                    <a href="#contact" class="btn btn-outline-primary btn-lg">
+                        <i data-feather="mail" class="me-2"></i>Contact Sales
+                    </a>
+                </div>
+                <div class="mt-4">
+                    <small class="text-muted">
+                        <strong>Demo Access Available:</strong> Use demo credentials to explore the platform
+                    </small>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Contact Section -->
+<section id="contact" class="py-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 mx-auto text-center">
+                <h2 class="fw-bold mb-4">Contact Us</h2>
+                <p class="lead mb-4">Have questions? Our security experts are here to help.</p>
+                <div class="row">
+                    <div class="col-md-4">
+                        <i data-feather="mail" class="text-primary mb-3" style="width: 40px; height: 40px;"></i>
+                        <h5>Email</h5>
+                        <p>security@yourapp.com</p>
+                    </div>
+                    <div class="col-md-4">
+                        <i data-feather="phone" class="text-primary mb-3" style="width: 40px; height: 40px;"></i>
+                        <h5>Phone</h5>
+                        <p>+1 (555) 123-4567</p>
+                    </div>
+                    <div class="col-md-4">
+                        <i data-feather="clock" class="text-primary mb-3" style="width: 40px; height: 40px;"></i>
+                        <h5>Support</h5>
+                        <p>24/7 Enterprise Support</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="bg-dark text-white py-4">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <p class="mb-0">&copy; 2024 Java Security App. All rights reserved.</p>
+            </div>
+            <div class="col-md-6 text-md-end">
+                <p class="mb-0">Enterprise Security Solutions Built on Spring Boot</p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- latest jquery-->
+<script th:src="@{/assets/js/jquery-3.3.1.min.js}"></script>
+
+<!-- Bootstrap js-->
+<script th:src="@{/assets/js/bootstrap.bundle.min.js}"></script>
+
+<!-- feather icon js-->
+<script th:src="@{/assets/js/icons/feather-icon/feather.min.js}"></script>
+<script th:src="@{/assets/js/icons/feather-icon/feather-icon.js}"></script>
+
+<!-- slick js -->
+<script th:src="@{/assets/js/slick.js}"></script>
+
+<!-- lazyload js-->
+<script th:src="@{/assets/js/lazysizes.min.js}"></script>
+
+<!--script admin-->
+<script th:src="@{/assets/js/admin-script.js}"></script>
+</body>
+</html>

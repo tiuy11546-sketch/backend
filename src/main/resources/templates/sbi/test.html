@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login | yono BUSINESS</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    :root {
+        --light_Blue: #edf0f7;
+        --Yono_White: #FFFFFF;
+        --Yono_Off_White: #FFFFFF;
+        --Yono_Blue: #514FA1;
+        --Yono_Grey: #242424;
+        --Yono_Grey_Tint_85: #595A5C;
+        --Yono_Grey_Tint_10: #f5f5f6;
+        --Yono_Grey_Tint_15: #f5f5f6;
+        --Yono_Blue_Tint_30: #EAEBF5;
+        --Yono_Blue_Tint_15: #F1F3FF;
+        --Yono_Blue_Tint_45: #D6D8EC;
+        --Yono_Grey_Tint_30: #efeff0;
+        --Yono_Pink: #B22382;
+        --Yono_tagline: #B22382;
+        --Yono_Grey_Tint_40: #3f3f3fcc;
+        --Yono_WCAG_Button: linear-gradient(65deg, #C62052, #280071) border-box;
+        --Gradient_light: #C62052;
+        --Yono_Purple: #673391;
+        --Yono_WCAG_OverButton01: #f7e9f2;
+        --Yono_WCAG_OverButton02: #eaebf5;
+        --transparent: transparent;
+        --logo: linear-gradient(65deg, #C62052, #280071) border-box;
+        --shadow_container_color: linear-gradient(180deg, rgba(245, 245, 246, .4) 0%, rgba(255, 255, 255, .4) 100%);
+        --new_menu_hover: #280071;
+        --Yono_Blue_Tint_60: #A8ACD5;
+        --sitemap_link_color: #514FA1;
+        --Yono_sitemap_Purple: #673391;
+    }
+
+    body {
+        font-family: 'Roboto', Arial, sans-serif;
+        background: var(--light_Blue);
+        margin: 0;
+        padding: 0;
+        min-height: 100vh;
+    }
+
+    .login-wrapper {
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+    }
+
+    /* Header Styles */
+    .header-row {
+        background: var(--Yono_White);
+        padding: 15px 0;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    }
+
+    .logo-img {
+        height: 38px;
+        width: auto;
+    }
+
+    /* Card with Gradient Background */
+    .gradient-card {
+        background: var(--Yono_WCAG_Button);
+        border-radius: 16px;
+        padding: 40px;
+        margin: 30px auto;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        max-width: 450px;
+        width: 100%;
+    }
+
+    .login-header {
+        color: var(--Yono_White);
+        font-size: 2.2rem;
+        font-weight: 700;
+        margin-bottom: 30px;
+        text-align: center;
+    }
+
+    .new_logo {
+        height: 40px;
+        vertical-align: middle;
+        margin-left: 8px;
+    }
+
+    /* Form Styles */
+    .form-container {
+        background: var(--Yono_White);
+        border-radius: 12px;
+        padding: 30px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+    }
+
+    .form-label {
+        color: var(--Yono_Grey);
+        font-weight: 600;
+        font-size: 0.9rem;
+        margin-bottom: 8px;
+        display: block;
+    }
+
+    .form-control {
+        border: 1px solid var(--Yono_Grey_Tint_30);
+        border-radius: 8px;
+        padding: 12px 15px;
+        font-size: 1rem;
+        transition: all 0.3s ease;
+        background: var(--Yono_White);
+    }
+
+    .form-control:focus {
+        border-color: var(--Yono_Blue);
+        box-shadow: 0 0 0 3px rgba(81, 79, 161, 0.1);
+        outline: none;
+    }
+
+    .input-group {
+        position: relative;
+        margin-bottom: 24px;
+    }
+
+    .password-toggle {
+        position: absolute;
+        right: 12px;
+        top: 50%;
+        transform: translateY(-50%);
+        background: none;
+        border: none;
+        color: var(--Yono_Blue);
+        cursor: pointer;
+    }
+
+    /* Forgot Password Link */
+    .forgot-password {
+        color: var(--Yono_Blue);
+        text-decoration: none;
+        font-size: 0.9rem;
+        font-weight: 500;
+        transition: color 0.3s ease;
+    }
+
+    .forgot-password:hover {
+        color: var(--Yono_Purple);
+        text-decoration: underline;
+    }
+
+    /* Button Styles */
+    .proceed-btn {
+        background: linear-gradient(65deg, #C62052, #280071);
+        border: none;
+        border-radius: 8px;
+        color: var(--Yono_White);
+        padding: 14px 32px;
+        font-size: 1.1rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        width: 100%;
+        margin-top: 20px;
+        text-transform: uppercase;
+        box-shadow: 0 4px 15px rgba(198, 32, 82, 0.3);
+    }
+
+    .proceed-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(198, 32, 82, 0.4);
+    }
+
+    .proceed-btn:active {
+        transform: translateY(0);
+    }
+
+    .proceed-btn:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+    }
+
+    /* Inner button content */
+    .inner_button_margin {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .gradient-card {
+            padding: 30px 20px;
+            margin: 20px 15px;
+        }
+
+        .login-header {
+            font-size: 1.8rem;
+        }
+
+        .form-container {
+            padding: 20px 15px;
+        }
+
+        .header-row {
+            padding: 10px 0;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .login-header {
+            font-size: 1.5rem;
+        }
+
+        .proceed-btn {
+            padding: 12px 24px;
+            font-size: 1rem;
+        }
+    }
+
+    /* Custom focus styles for accessibility */
+    *:focus {
+        outline: 2px solid var(--Yono_Blue);
+        outline-offset: 2px;
+    }
+
+    /* Error state */
+    .form-control.error {
+        border-color: #DA1E28;
+    }
+
+    .error-message {
+        color: #DA1E28;
+        font-size: 0.85rem;
+        margin-top: 5px;
+        display: none;
+    }
+
+    /* Loading state for button */
+    .proceed-btn.loading {
+        position: relative;
+        color: transparent;
+    }
+
+    .proceed-btn.loading::after {
+        content: '';
+        position: absolute;
+        width: 20px;
+        height: 20px;
+        border: 2px solid var(--Yono_White);
+        border-radius: 50%;
+        border-top-color: transparent;
+        animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+        to { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+<div class="login-wrapper">
+  <!-- First Row with White Background and Logo -->
+  <div class="header-row">
+    <div class="container">
+      <div class="row">
+        <div class="col-7">
+          <a tabindex="0" title="yono BUSINESS" rel="external" class="md-margin-logo">
+                            <span class="Main-header__cta__logo">
+                                <img loading="lazy" alt="Yono Business logo" width="140px" height="38px" src="/sbi/images/yono_logo.png" class="logo-img">
+                            </span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Card with Gradient Background -->
+  <div class="container">
+    <div class="gradient-card">
+      <!-- Heading with Logo -->
+      <div class="mt-4">
+        <h1 class="login-header">
+          Login to
+          <span>
+                            <img class="new_logo" src="/sbi/images/Login_yono_logo.svg" alt="yono Logo">
+                        </span>
+          Business
+        </h1>
+      </div>
+
+      <!-- Login Form -->
+      <div class="form-container">
+        <form id="loginForm">
+          <!-- User ID Field -->
+          <div class="input-group">
+            <label for="userId" class="form-label">
+              User ID <span class="mandatory_txt">*</span>
+            </label>
+            <input
+                    type="text"
+                    id="userId"
+                    class="form-control"
+                    placeholder="Enter your User ID"
+                    required
+                    aria-label="User ID"
+            >
+            <div class="error-message" id="userIdError">
+              User ID is required
+            </div>
+          </div>
+
+          <!-- Password Field -->
+          <div class="input-group">
+            <label for="password" class="form-label">
+              Password <span class="mandatory_txt">*</span>
+            </label>
+            <input
+                    type="password"
+                    id="password"
+                    class="form-control"
+                    placeholder="Enter your Password"
+                    required
+                    aria-label="Password"
+            >
+            <button
+                    type="button"
+                    class="password-toggle"
+                    onclick="togglePasswordVisibility()"
+                    aria-label="Show password"
+            >
+              👁️
+            </button>
+            <div class="error-message" id="passwordError">
+              Password is required
+            </div>
+          </div>
+
+          <!-- Forgot Password Link -->
+          <div class="text-end mb-4">
+            <a href="javascript:void(0);" tabindex="0" class="forgot-password">
+              Forgot Password?
+            </a>
+          </div>
+
+          <!-- Proceed Button -->
+          <yono-button-comp newbutton="true" type="button">
+            <button class="proceed-btn" type="submit" onclick="handleLogin()">
+              <div class="inner_button_margin">
+                <span class="content">Proceed</span>
+              </div>
+            </button>
+          </yono-button-comp>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function togglePasswordVisibility() {
+      const passwordField = document.getElementById('password');
+      const toggleButton = document.querySelector('.password-toggle');
+
+      if (passwordField.type === 'password') {
+          passwordField.type = 'text';
+          toggleButton.textContent = '🙈';
+          toggleButton.setAttribute('aria-label', 'Hide password');
+      } else {
+          passwordField.type = 'password';
+          toggleButton.textContent = '👁️';
+          toggleButton.setAttribute('aria-label', 'Show password');
+      }
+  }
+
+  function handleLogin() {
+      event.preventDefault();
+
+      const userId = document.getElementById('userId');
+      const password = document.getElementById('password');
+      const userIdError = document.getElementById('userIdError');
+      const passwordError = document.getElementById('passwordError');
+      const submitBtn = document.querySelector('.proceed-btn');
+
+      // Reset error states
+      userId.classList.remove('error');
+      password.classList.remove('error');
+      userIdError.style.display = 'none';
+      passwordError.style.display = 'none';
+
+      let isValid = true;
+
+      // Validate User ID
+      if (!userId.value.trim()) {
+          userId.classList.add('error');
+          userIdError.style.display = 'block';
+          isValid = false;
+      }
+
+      // Validate Password
+      if (!password.value.trim()) {
+          password.classList.add('error');
+          passwordError.style.display = 'block';
+          isValid = false;
+      }
+
+      if (isValid) {
+          // Simulate login process
+          submitBtn.classList.add('loading');
+          submitBtn.disabled = true;
+
+          // Simulate API call
+          setTimeout(() => {
+              submitBtn.classList.remove('loading');
+              submitBtn.disabled = false;
+
+              // For demo purposes, show success alert
+              alert(`Login successful!\nUser ID: ${userId.value}`);
+
+              // In real implementation, submit form or call API
+              // document.getElementById('loginForm').submit();
+          }, 1500);
+      }
+
+      return false;
+  }
+
+  // Add form submission handler
+  document.getElementById('loginForm').addEventListener('submit', handleLogin);
+
+  // Add Enter key support
+  document.addEventListener('keypress', function(e) {
+      if (e.key === 'Enter' && document.activeElement.tagName !== 'TEXTAREA') {
+          handleLogin();
+      }
+  });
+
+  // Focus management for accessibility
+  document.addEventListener('DOMContentLoaded', function() {
+      const userIdField = document.getElementById('userId');
+      if (userIdField) {
+          userIdField.focus();
+      }
+  });
+</script>
+</body>
+</html>

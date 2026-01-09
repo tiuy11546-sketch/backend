@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<!-- Remove the outer div and keep only the fragment content -->
+<div th:fragment="sidebar" class="page-sidebar">
+  <div class="main-header-left d-none d-lg-block">
+    <div class="logo-wrapper">
+      <a th:href="@{/}">
+        <img class="d-none d-lg-block blur-up lazyloaded"
+             th:src="@{/assets/images/dashboard/multikart-logo.png}" alt="Logo">
+      </a>
+    </div>
+  </div>
+  <div class="sidebar custom-scrollbar">
+    <a href="javascript:void(0)" class="sidebar-back d-lg-none d-block">
+      <i class="fa fa-times" aria-hidden="true"></i>
+    </a>
+    <ul class="sidebar-menu">
+      <li>
+        <a class="sidebar-header" th:href="@{/}">
+          <i data-feather="home"></i>
+          <span>Dashboard</span>
+        </a>
+      </li>
+      <li>
+        <a class="sidebar-header" th:href="@{/regions}">
+          <i data-feather="home"></i>
+          <span>Regions</span>
+        </a>
+      </li>
+      <li>
+        <a class="sidebar-header" th:href="@{/users}">
+          <i data-feather="users"></i>
+          <span>Users</span>
+        </a>
+      </li>
+      <li>
+        <a class="sidebar-header" th:href="@{/security}">
+          <i data-feather="shield"></i>
+          <span>Security</span>
+        </a>
+      </li>
+      <li>
+        <a class="sidebar-header" th:href="@{/reports}">
+          <i data-feather="bar-chart-2"></i>
+          <span>Reports</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+</div>
+</body>
+</html>

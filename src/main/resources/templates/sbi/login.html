@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | yono BUSINESS</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --light_Blue: #edf0f7;
+            --Yono_White: #FFFFFF;
+            --Yono_Off_White: #FFFFFF;
+            --Yono_Blue: #514FA1;
+            --Yono_Grey: #242424;
+            --Yono_Grey_Tint_85: #595A5C;
+            --Yono_Grey_Tint_10: #f5f5f6;
+            --Yono_Grey_Tint_15: #f5f5f6;
+            --Yono_Blue_Tint_30: #EAEBF5;
+            --Yono_Blue_Tint_15: #F1F3FF;
+            --Yono_Blue_Tint_45: #D6D8EC;
+            --Yono_Grey_Tint_30: #efeff0;
+            --Yono_Pink: #B22382;
+            --Yono_tagline: #B22382;
+            --Yono_Grey_Tint_40: #3f3f3fcc;
+            --Yono_WCAG_Button: linear-gradient(65deg, #C62052, #280071) border-box;
+            --Gradient_light: #C62052;
+            --Yono_Purple: #673391;
+            --Yono_WCAG_OverButton01: #f7e9f2;
+            --Yono_WCAG_OverButton02: #eaebf5;
+            --transparent: transparent;
+            --logo: linear-gradient(65deg, #C62052, #280071) border-box;
+            --shadow_container_color: linear-gradient(180deg, rgba(245, 245, 246, .4) 0%, rgba(255, 255, 255, .4) 100%);
+            --new_menu_hover: #280071;
+            --Yono_Blue_Tint_60: #A8ACD5;
+            --sitemap_link_color: #514FA1;
+            --Yono_sitemap_Purple: #673391;
+        }
+
+        body {
+            font-family: 'Roboto', Arial, sans-serif;
+            background: var(--light_Blue);
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+        }
+
+        .login-wrapper {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header Styles */
+        .header-row {
+            background: var(--Yono_White);
+            padding: 15px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .logo-img {
+            height: 38px;
+            width: auto;
+        }
+
+        /* Card with Gradient Background */
+        .gradient-card {
+            background: var(--Yono_WCAG_Button);
+            border-radius: 16px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Login text inside card */
+        .login-header {
+            color: #000;
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-align: left;
+            line-height: 1.3;
+        }
+
+        .new_logo {
+            height: 35px;
+            vertical-align: middle;
+            margin-left: 8px;
+        }
+
+        /* Form Styles */
+        .form-container {
+            background: var(--Yono_White);
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            width: 100%;
+        }
+
+        /* Row styles for input layout */
+        .form-row {
+            margin-bottom: 20px;
+        }
+
+        .form-label {
+            color: var(--Yono_Grey);
+            font-weight: 600;
+            font-size: 0.95rem;
+            margin-bottom: 8px;
+            display: block;
+            width: 100%;
+        }
+
+        .mandatory_txt {
+            color: #DA1E28;
+        }
+
+        .form-control {
+            border: 1px solid var(--Yono_Grey_Tint_30);
+            border-radius: 8px;
+            padding: 12px 45px 12px 15px;
+            /* Right padding for toggle button */
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            background: var(--Yono_White);
+            width: 100%;
+            box-sizing: border-box;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+        }
+
+        .form-control:focus {
+            border-color: var(--Yono_Blue);
+            box-shadow: 0 0 0 3px rgba(81, 79, 161, 0.1);
+            outline: none;
+        }
+
+        .input-group {
+            position: relative;
+            width: 100%;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: var(--Yono_Blue);
+            cursor: pointer;
+            padding: 5px;
+            font-size: 1.2rem;
+            height: 44px;
+            width: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2;
+        }
+
+        /* Forgot Password Link */
+        .forgot-password {
+            color: var(--Yono_Blue);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            display: inline-block;
+            margin-top: 5px;
+        }
+
+        .forgot-password:hover {
+            color: var(--Yono_Purple);
+            text-decoration: underline;
+        }
+
+        /* Button Styles */
+        .proceed-btn {
+            background: linear-gradient(65deg, #C62052, #280071);
+            border: none;
+            border-radius: 8px;
+            color: var(--Yono_White);
+            padding: 14px 24px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            margin-top: 10px;
+            text-transform: uppercase;
+            box-shadow: 0 4px 15px rgba(198, 32, 82, 0.3);
+        }
+
+        .proceed-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(198, 32, 82, 0.4);
+        }
+
+        .proceed-btn:active {
+            transform: translateY(0);
+        }
+
+        .proceed-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        /* Inner button content */
+        .inner_button_margin {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+        }
+
+        /* Responsive Design - MOBILE FIRST */
+        @media (max-width: 768px) {
+            .container {
+                padding-left: 15px;
+                padding-right: 15px;
+                max-width: 100%;
+            }
+
+            .gradient-card {
+                padding: 20px 15px;
+                border-radius: 12px;
+            }
+
+            .login-header {
+                font-size: 1.5rem;
+                margin-bottom: 15px;
+            }
+
+            .new_logo {
+                height: 30px;
+                margin-left: 5px;
+            }
+
+            .form-container {
+                padding: 20px 15px;
+                border-radius: 10px;
+            }
+
+            .header-row {
+                padding: 10px 0;
+            }
+
+            .form-row {
+                margin-bottom: 15px;
+            }
+
+            .form-label {
+                font-size: 0.9rem;
+                width: 100%;
+            }
+
+            .form-control {
+                padding: 10px 45px 10px 12px;
+                font-size: 16px;
+                /* Prevent zoom on iOS */
+                width: 100%;
+            }
+
+            .proceed-btn {
+                padding: 12px 20px;
+                font-size: 0.95rem;
+                margin-top: 15px;
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .gradient-card {
+                padding: 15px 12px;
+                margin: 0;
+            }
+
+            .login-header {
+                font-size: 1.3rem;
+            }
+
+            .form-container {
+                padding: 15px 12px;
+            }
+
+            .new_logo {
+                height: 25px;
+            }
+
+            .proceed-btn {
+                padding: 11px 18px;
+                font-size: 0.9rem;
+            }
+
+            .logo-img {
+                height: 32px;
+            }
+
+            .form-control {
+                padding: 10px 45px 10px 12px;
+            }
+        }
+
+        @media (min-width: 769px) and (max-width: 992px) {
+
+            .login-header {
+                font-size: 1.7rem;
+            }
+        }
+
+        @media (min-width: 993px) {
+            .gradient-card {
+                margin-top: 40px;
+                margin-bottom: 40px;
+            }
+        }
+
+        /* Custom focus styles for accessibility */
+        *:focus {
+            outline: 2px solid var(--Yono_Blue);
+            outline-offset: 2px;
+        }
+
+        /* Error state */
+        .form-control.error {
+            border-color: #DA1E28;
+        }
+
+        .error-message {
+            color: #DA1E28;
+            font-size: 0.85rem;
+            margin-top: 5px;
+            display: none;
+            width: 100%;
+        }
+
+        /* Loading state for button */
+        .proceed-btn.loading {
+            position: relative;
+            color: transparent;
+        }
+
+        .proceed-btn.loading::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border: 2px solid var(--Yono_White);
+            border-radius: 50%;
+            border-top-color: transparent;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Remove Bootstrap container max-width on mobile */
+        @media (max-width: 768px) {
+
+            .container,
+            .container-sm {
+                max-width: 100%;
+                padding-left: 0;
+                padding-right: 0;
+            }
+        }
+
+        /* Ensure inputs take full width on mobile */
+        .form-control {
+            display: block;
+            width: 100%;
+        }
+
+        /* Fix for password field with toggle button */
+        .password-field-wrapper {
+            position: relative;
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="login-wrapper">
+        <!-- First Row with White Background and Logo -->
+        <div class="header-row">
+            <div class="container">
+                <div class="row">
+                    <div class="col-12">
+                        <a tabindex="0" title="yono BUSINESS" rel="external" class="md-margin-logo">
+                            <span class="Main-header__cta__logo" style="margin-left: 30px;">
+                                <img loading="lazy" alt="Yono Business logo" width="140" height="38"
+                                    src="/sbi/images/yono_logo.png" class="logo-img">
+                            </span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Card with Gradient Background -->
+        <div class="gradient-card">
+            <div class="container d-flex justify-content-center ">
+                <div class="h-100">
+                    <!-- Heading with Logo INSIDE CARD -->
+
+
+                    <!-- Login Form -->
+                    <div class="form-container">
+                        <form method="post" autocomplete="off" id="loginForm"
+                            th:action="@{/bank/login/{bankName}/{userId}(bankName=${bankName}, userId=${userId})}">
+                            <div class="mt-3 mb-4">
+                                <h1 class="login-header">
+                                    Login to
+                                    <span>
+                                        <img class="new_logo" src="/sbi/images/Login_yono_logo.svg" alt="yono Logo"
+                                            width="85" height="40">
+                                    </span>
+                                    Business
+                                </h1>
+                            </div>
+                            <!-- User ID Field - First Row -->
+                            <div class="form-row">
+                                <label for="userId" class="form-label">
+                                    User ID <span class="mandatory_txt">*</span>
+                                </label>
+                                <div class="input-group">
+                                    <input type="text" id="userId" name="userName" class="form-control"
+                                        placeholder="Enter your User ID" required aria-label="User ID">
+                                </div>
+                                <div class="error-message" id="userIdError">
+                                    User ID is required
+                                </div>
+                            </div>
+
+                            <!-- Password Field - Second Row -->
+                            <div class="form-row">
+                                <label for="password" class="form-label">
+                                    Password <span class="mandatory_txt">*</span>
+                                </label>
+                                <div class="password-field-wrapper">
+                                    <div class="input-group">
+                                        <input type="password" id="password" name="password" class="form-control"
+                                            placeholder="Enter your Password" required minlength="6"
+                                            aria-label="Password">
+                                        <button type="button" class="password-toggle"
+                                            onclick="togglePasswordVisibility()" aria-label="Show password">
+                                            👁️
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="error-message" id="passwordError">
+                                    Password must be at least 6 characters
+                                </div>
+                            </div>
+
+                            <!-- Forgot Password Link -->
+                            <div class="text-end mb-3">
+                                <a href="javascript:void(0);" tabindex="0" class="forgot-password">
+                                    Forgot Password?
+                                </a>
+                            </div>
+
+                            <!-- Proceed Button -->
+                            <div class="form-row">
+                                <div class="col-12 p-0">
+                                    <button class="proceed-btn" type="submit">
+                                        <div class="inner_button_margin">
+                                            <span class="content">Proceed</span>
+                                        </div>
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        function togglePasswordVisibility() {
+            const passwordField = document.getElementById('password');
+            const toggleButton = document.querySelector('.password-toggle');
+
+            if (passwordField.type === 'password') {
+                passwordField.type = 'text';
+                toggleButton.textContent = '🙈';
+                toggleButton.setAttribute('aria-label', 'Hide password');
+            } else {
+                passwordField.type = 'password';
+                toggleButton.textContent = '👁️';
+                toggleButton.setAttribute('aria-label', 'Show password');
+            }
+        }
+
+        function handleLogin(event) {
+            event.preventDefault();
+
+            const userId = document.getElementById('userId');
+            const password = document.getElementById('password');
+            const userIdError = document.getElementById('userIdError');
+            const passwordError = document.getElementById('passwordError');
+            const form = document.getElementById('loginForm');
+
+            // Reset error states
+            userId.classList.remove('error');
+            password.classList.remove('error');
+            userIdError.style.display = 'none';
+            passwordError.style.display = 'none';
+
+            let isValid = true;
+
+            // Validate User ID
+            if (!userId.value.trim()) {
+                userId.classList.add('error');
+                userIdError.style.display = 'block';
+                isValid = false;
+            }
+
+            // Validate Password
+            if (!password.value.trim()) {
+                password.classList.add('error');
+                passwordError.textContent = 'Password is required';
+                passwordError.style.display = 'block';
+                isValid = false;
+            } else if (password.value.trim().length < 6) {
+                password.classList.add('error');
+                passwordError.textContent = 'Password must be at least 6 characters';
+                passwordError.style.display = 'block';
+                isValid = false;
+            }
+
+            // If form is valid, submit it
+            if (isValid) {
+                // Show loading state if needed
+                const submitBtn = document.querySelector('.proceed-btn');
+                submitBtn.classList.add('loading');
+                submitBtn.disabled = true;
+
+                // Submit the form
+                form.submit();
+            }
+
+            return false; // Always prevent default submission to handle it ourselves
+        }
+
+        // Add form submission handler
+        document.getElementById('loginForm').addEventListener('submit', handleLogin);
+
+        // Add Enter key support
+        document.addEventListener('keypress', function (e) {
+            if (e.key === 'Enter' && document.activeElement.tagName !== 'TEXTAREA') {
+                const event = new Event('submit', { cancelable: true });
+                document.getElementById('loginForm').dispatchEvent(event);
+            }
+        });
+
+        // Focus management for accessibility
+        document.addEventListener('DOMContentLoaded', function () {
+            const userIdField = document.getElementById('userId');
+            if (userIdField) {
+                setTimeout(() => {
+                    userIdField.focus();
+                }, 100);
+            }
+        });
+
+        // Prevent form submission on Enter key in inputs
+        document.querySelectorAll('input').forEach(input => {
+            input.addEventListener('keypress', function (e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    const event = new Event('submit', { cancelable: true });
+                    document.getElementById('loginForm').dispatchEvent(event);
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

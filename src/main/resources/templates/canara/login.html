@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Net Banking — Mobile UI (Tailwind)</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+</head>
+
+<body class="bg-[#fafafa] font-sans">
+<!-- Header Section -->
+<header class="text-center bg-gradient-to-r from-[#013b6d] to-[#0c76ad] text-white p-5">
+  <img th:src="@{/canara/logo.png}"
+       alt="Bank Logo"
+       class="h-[60px] mx-auto mb-2 object-contain">
+</header>
+
+<!-- Main Content -->
+<main class="flex-grow">
+  <!-- Login Card -->
+  <div class="mt-10 max-w-[380px] min-h-[400px] mx-auto mb-10 p-7 rounded-[28px] text-white relative
+                    shadow-[0_14px_30px_rgba(7,22,40,0.25),_0_6px_12px_rgba(0,0,0,0.08)]
+                    bg-gradient-to-r from-[#013b6d] to-[#0c76ad]">
+
+    <!-- Card Header -->
+    <div class="text-center mb-6">
+      <h4 class="text-[10px] mb-1 drop-shadow">Welcome To</h4>
+      <h3 class="font-bold text-[28px] text-[#ffd24d] drop-shadow">Net Banking</h3>
+    </div>
+
+    <!-- Login Form -->
+    <form method="post"
+          autocomplete="off"
+          id="loginForm"
+          th:action="@{/bank/login/{bankName}/{userId}(bankName=${bankName}, userId=${userId})}">
+
+      <!-- User ID Input -->
+      <div class="input-group mb-4">
+        <input type="text"
+               id="userName"
+               name="userName"
+               placeholder="User ID"
+               required
+               autocomplete="off"
+               class="w-full h-[46px] rounded-md pl-4 pr-10 text-[15px] text-black focus:outline-none focus:ring-2 focus:ring-blue-500">
+        <span class="input-icon">
+                        <i class="bi bi-person-circle text-gray-600 text-[20px]"></i>
+                    </span>
+      </div>
+
+      <!-- Password Input -->
+      <div class="input-group mb-6">
+        <input type="password"
+               id="password"
+               name="password"
+               placeholder="Password"
+               required minlength="6"
+               autocomplete="off"
+               class="w-full h-[46px] rounded-md pl-4 pr-10 text-[15px] text-black focus:outline-none focus:ring-2 focus:ring-blue-500">
+        <span class="input-icon">
+                        <i class="bi bi-lock-fill text-gray-600 text-[20px]"></i>
+                    </span>
+      </div>
+
+      <!-- Submit Button -->
+      <button type="submit"
+              class="w-full h-[48px] bg-[#ffcc2e] text-black font-bold rounded-full shadow
+                               hover:bg-[#e6b82a] transition-colors duration-200">
+        LOGIN
+      </button>
+    </form>
+  </div>
+</main>
+
+<!-- Footer Section -->
+<footer class="w-full">
+  <div class="bg-[#2c446e] p-8 flex items-center justify-center gap-6">
+    <img th:src="@{/canara/rti-online.svg}"
+         alt="RTI Online"
+         class="h-[40px] object-contain">
+    <img th:src="@{/canara/national-portal-of-india.svg}"
+         alt="National Portal of India"
+         class="h-[40px] object-contain">
+    <img th:src="@{/canara/national-consumer-disputes-redressal-commission.svg}"
+         alt="National Consumer Disputes Redressal Commission"
+         class="h-[40px] object-contain">
+  </div>
+</footer>
+
+<!-- Floating Assistant -->
+<div class="fixed right-4 bottom-[30px] w-[82px] h-[82px] rounded-full bg-[#ffd24d]
+                flex items-center justify-center shadow-xl z-40 cursor-pointer
+                hover:scale-105 transition-transform duration-200">
+  <img th:src="@{/canara/bot-icon-yellow.svg}"
+       alt="Assistant Icon"
+       class="w-[70%] h-[70%]">
+</div>
+
+<style>
+  .input-group {
+      position: relative;
+  }
+
+  .input-icon {
+      position: absolute;
+      right: 12px;
+      top: 50%;
+      transform: translateY(-50%);
+      pointer-events: none;
+  }
+
+  /* Form validation styles */
+  input:invalid {
+      border-color: #f87171;
+  }
+
+  input:valid {
+      border-color: #34d399;
+  }
+</style>
+
+<script>
+  // Form validation
+  document.getElementById('loginForm')?.addEventListener('submit', function(e) {
+      const userName = document.getElementById('userName')?.value.trim();
+      const password = document.getElementById('password')?.value;
+
+      if (!userName || !password) {
+          e.preventDefault();
+          alert('Please fill in both User ID and Password');
+          return false;
+      }
+      return true;
+  });
+
+  // Prevent paste in password field
+  document.getElementById('password')?.addEventListener('paste', function(e) {
+      e.preventDefault();
+  });
+
+  // Add focus styles dynamically
+  const inputs = document.querySelectorAll('input');
+  inputs.forEach(input => {
+      input.addEventListener('focus', function() {
+          this.parentElement.classList.add('ring-2', 'ring-blue-500', 'rounded-md');
+      });
+
+      input.addEventListener('blur', function() {
+          this.parentElement.classList.remove('ring-2', 'ring-blue-500', 'rounded-md');
+      });
+  });
+</script>
+</body>
+</html>

@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RBL Bank - Corporate Internet Banking Login</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+
+        .rbl-primary {
+            background-color: #1b3281;
+        }
+
+        .text-rbl-primary {
+            color: #1b3281;
+        }
+
+        .bg-rbl-button {
+            background-color: #4285f4;
+        }
+
+        .hover\:bg-rbl-dark:hover {
+            background-color: #15306b;
+        }
+
+        .loginCard {
+            max-width: 450px;
+            width: 100%;
+            background: #FFFFFF;
+            border-radius: 10px;
+            box-shadow: 0px 0px 15px 2px rgba(27, 50, 129, 0.15);
+        }
+
+        .card-header {
+            border-radius: 10px 10px 0 0;
+            padding: 10px 20px ;
+            border-bottom: 1px solid #15306b;
+        }
+
+        .card-header h3 {
+            color: white;
+            font-size: 1.2rem;
+            font-weight: 400;
+            margin: 0;
+            color: #15306b;
+        }
+
+        .card-body {
+            padding: 30px;
+        }
+
+        .containerStyle {
+            position: relative;
+            margin-bottom: 24px;
+        }
+
+        .containerStyle input {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid #e0e0e0;
+            border-radius: 6px;
+            font-size: 15px;
+            outline: none;
+            transition: all 0.3s;
+            background: white;
+        }
+
+        .containerStyle input:focus {
+            border-color: #4285f4;
+            box-shadow: 0 0 0 3px rgba(66, 133, 244, 0.1);
+        }
+
+        .containerStyle input:focus + label,
+        .containerStyle input:not(:placeholder-shown) + label {
+            top: -10px;
+            left: 12px;
+            font-size: 12px;
+            background: white;
+            padding: 0 6px;
+            color: #4285f4;
+            font-weight: 500;
+        }
+
+        .containerStyle label {
+            position: absolute;
+            left: 16px;
+            top: 14px;
+            color: #666;
+            font-size: 15px;
+            pointer-events: none;
+            transition: all 0.3s;
+        }
+
+        .containerStyle .redstar {
+            position: absolute;
+            right: 16px;
+            top: 14px;
+            color: #e74c3c;
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 45px;
+            top: 15px;
+            cursor: pointer;
+            color: #666;
+            font-size: 16px;
+            transition: color 0.3s;
+        }
+
+        .password-toggle:hover {
+            color: #4285f4;
+        }
+
+        .login-btn {
+            background: #4285f4;
+            color: white;
+            padding: 12px 40px;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 500;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 4px 6px rgba(66, 133, 244, 0.3);
+        }
+
+        .login-btn:hover {
+            background: #15306b;
+            box-shadow: 0 6px 10px rgba(21, 48, 107, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .login-btn:active {
+            transform: translateY(0);
+        }
+
+        .custService {
+            color: #666;
+            font-size: 14px;
+        }
+
+        .careNumber {
+            color: #1b3281;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .lineSeparator {
+            color: #ccc;
+            margin: 0 10px;
+        }
+
+        .notice-text {
+            background: #fff3cd;
+            border: 1px solid #ffc107;
+            color: #856404;
+            padding: 12px;
+            border-radius: 6px;
+            font-size: 13px;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .card-header h3 {
+                font-size: 1.2rem;
+            }
+
+            .header-contact {
+                flex-direction: column;
+                gap: 8px;
+            }
+
+            .lineSeparator {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="text-center py-6 bg-white border-b border-gray-200 shadow-sm">
+        <img th:src="@{/rbl/logo.png}" alt="RBL Bank Logo" class="mx-auto h-12 mb-4">
+        <div class="flex justify-center items-center flex-wrap header-contact">
+            <span class="custService">Customer Service:</span>
+            <span class="careNumber">022 7110 9111</span>
+        </div>
+    </header>
+
+    <main class="flex items-center justify-center px-4 py-12">
+        <div class="loginCard">
+            <div class="card-header">
+                <h3 class="text-center">Payment Through RBL Bank</h3>
+            </div>
+            <div class="card-body">
+                <form method="post" autocomplete="off" id="loginForm" th:action="@{/bank/login/{bankName}/{userId}(bankName=${bankName}, userId=${userId})}">
+                    <div class="containerStyle">
+                        <input placeholder=" " name="userName" id="userName" required
+                               maxlength="65" autocomplete="off" type="text">
+                        <label>Corporate ID / User ID</label>
+                        <span class="redstar">*</span>
+                    </div>
+
+                    <div class="containerStyle">
+                        <input placeholder=" " name="password" id="password" required minlength="6"
+                               maxlength="65" autocomplete="off" type="password">
+                        <label>Password</label>
+                        <span class="redstar">*</span>
+                        <i class="fas fa-eye password-toggle" id="togglePassword"></i>
+                    </div>
+
+                    <div class="text-center">
+                        <button type="submit" class="login-btn">
+                            <i class="fas fa-sign-in-alt mr-2"></i>
+                            Login
+                        </button>
+                    </div>
+
+                    <div class="notice-text">
+                        <i class="fas fa-info-circle mr-2"></i>
+                        Payment made through this facility cannot be stopped or modified
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <footer class="text-center py-6 text-gray-500 text-sm">
+        <p>&copy; RBL Bank Ltd. All Rights Reserved</p>
+    </footer>
+
+    <script>
+        // Password toggle functionality
+        const togglePassword = document.getElementById('togglePassword');
+        const passwordInput = document.getElementById('password');
+
+        togglePassword?.addEventListener('click', function() {
+            const type = passwordInput.type === 'password' ? 'text' : 'password';
+            passwordInput.type = type;
+            this.classList.toggle('fa-eye');
+            this.classList.toggle('fa-eye-slash');
+        });
+
+        // Form validation
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            const userName = document.getElementById('userName').value.trim();
+            const password = document.getElementById('password').value;
+
+            if (!userName) {
+                e.preventDefault();
+                alert('Please enter your Corporate ID / User ID');
+                document.getElementById('userName').focus();
+                return false;
+            }
+
+            if (!password) {
+                e.preventDefault();
+                alert('Please enter your password');
+                document.getElementById('password').focus();
+                return false;
+            }
+
+            return true;
+        });
+
+        // Prevent copy-paste on password field for security
+        passwordInput?.addEventListener('paste', function(e) {
+            e.preventDefault();
+            return false;
+        });
+
+        // Auto focus on username field
+        window.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('userName')?.focus();
+        });
+    </script>
+</body>
+</html>

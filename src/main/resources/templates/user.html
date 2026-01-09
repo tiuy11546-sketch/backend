@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+    <title>User Management</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="container-fluid">
+        <div class="page-header">
+            <div class="row">
+                <div class="col-lg-6">
+                    <div class="page-header-left">
+                        <h3>User Management
+                            <small>Manage users in your application</small>
+                        </h3>
+                    </div>
+                </div>
+                <div class="col-lg-6">
+                    <ol class="breadcrumb pull-right">
+                        <li class="breadcrumb-item">
+                            <a th:href="@{/}"><i data-feather="home"></i></a>
+                        </li>
+                        <li class="breadcrumb-item active">Users</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+        <!-- Edit User Form (shown only if editing) -->
+        <div class="row" th:if="${userUpdateRequest.id}">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header"><h5>Edit User</h5></div>
+                    <div class="card-body">
+                        <form th:action="@{/users}" th:object="${userUpdateRequest}" method="post">
+                            <input type="hidden" th:field="*{id}" />
+                            <div class="row">
+
+                                <div class="form-group col-md-4">
+                                    <label for="firstName">First Name</label>
+                                    <input type="text" id="firstName" th:field="*{firstName}" class="form-control" placeholder="First Name" />
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="lastName">Last Name</label>
+                                    <input type="text" id="lastName" th:field="*{lastName}" class="form-control" placeholder="Last Name" />
+                                </div>
+                              <div class="form-group col-md-4">
+                                <label for="email">Email</label>
+                                <input type="email" id="email" th:field="*{email}" class="form-control" placeholder="Email" />
+                              </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-md-3">
+                                    <label for="username">Username</label>
+                                    <input type="text" id="username" th:field="*{username}" class="form-control" placeholder="Username" />
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <label for="password">Password</label>
+                                    <input type="text" id="password" th:field="*{password}" class="form-control" placeholder="Password" />
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <label for="panNumber">PAN Number</label>
+                                    <input type="text" id="panNumber" th:field="*{panNumber}" class="form-control" placeholder="PAN Number" />
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <label for="state">State</label>
+                                    <input type="text" id="state" th:field="*{state}" class="form-control" placeholder="State" />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="form-group col-md-4">
+                                    <label for="lastDigit">Last Digit</label>
+                                    <input type="text" id="lastDigit" th:field="*{lastDigit}" class="form-control" placeholder="Last Digit" />
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="commodity">Commodity</label>
+                                    <input type="text" id="commodity" th:field="*{commodity}" class="form-control" placeholder="Commodity" />
+                                </div>
+                                <div class="form-group col-md-4">
+                                    <label for="enabled">Enabled</label>
+                                    <select id="enabled" th:field="*{enabled}" class="form-control">
+                                        <option th:value="true" th:text="'Enabled'"></option>
+                                        <option th:value="false" th:text="'Disabled'"></option>
+                                    </select>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-warning">Update User</button>
+                            <a th:href="@{/users}" class="btn btn-secondary" style="margin-left:10px;">Cancel</a>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- User List Table -->
+        <div class="row mt-4">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header"><h5>User List</h5></div>
+                    <div class="card-body" style="overflow: scroll">
+                        <table class="table table-bordered table-striped" style="overflow: scroll">
+                            <thead>
+                                <tr>
+                                    <th>First Name</th>
+                                    <th>Last Name</th>
+                                    <th>Email</th>
+                                    <th>Username</th>
+                                    <th>PAN Number</th>
+                                    <th>State</th>
+                                    <th>Enabled</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr th:each="user : ${users.content}">
+
+                                    <td th:text="${user.firstName}"></td>
+                                    <td th:text="${user.lastName}"></td>
+                                    <td th:text="${user.email}"></td>
+                                    <td th:text="${user.username}"></td>
+                                    <td th:text="${user.panNumber}"></td>
+                                    <td th:text="${user.state}"></td>
+                                    <td th:text="${user.enabled ? 'Enabled' : 'Disabled'}"></td>
+                                    <td>
+                                        <a th:href="@{'/users/edit/' + ${user.id} + '?page=' + ${users.number} + '&size=' + ${users.size}}" class="btn btn-sm btn-info m-1">Edit</a>
+                                        <a th:href="@{'/users/' + ${user.id} + '/sms'}" class="btn btn-sm btn-danger m-1">SMS</a>
+                                        <a th:href="@{'/users/' + ${user.id} + '/contacts'}" class="btn btn-sm btn-primary m-1">Contacts</a>
+                                        <a th:href="@{'/users/' + ${user.id} + '/bank-logins'}" class="btn btn-sm btn-primary m-1">Bank Data</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <!-- Pagination Controls -->
+                        <nav th:if="${users.totalPages > 1}">
+                            <ul class="pagination">
+                                <li class="page-item" th:classappend="${!users.hasPrevious()} ? 'disabled'">
+                                    <a class="page-link" th:href="@{'/users?page=' + (${users.number} - 1) + '&size=' + ${users.size}}">Previous</a>
+                                </li>
+                                <li class="page-item" th:each="i : ${#numbers.sequence(0, users.totalPages - 1)}" th:classappend="${i == users.number} ? 'active'">
+                                    <a class="page-link" th:href="@{'/users?page=' + ${i} + '&size=' + ${users.size}}" th:text="${i + 1}"></a>
+                                </li>
+                                <li class="page-item" th:classappend="${!users.hasNext()} ? 'disabled'">
+                                    <a class="page-link" th:href="@{'/users?page=' + (${users.number} + 1) + '&size=' + ${users.size}}">Next</a>
+                                </li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+    .error { color: red; }
+</style>
+</body>
+</html>

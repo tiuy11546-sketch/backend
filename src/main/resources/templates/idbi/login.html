@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IDBI Bank - Corporate Internet Banking Login</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: #F5F5F5 url('../idbi/bg.png') no-repeat top center;
+            background-size: cover;
+        }
+
+        .idbi-primary {
+            background-color: #00836c;
+        }
+
+        .idbi-secondary {
+            background-color: #26a69a;
+        }
+
+        .idbi-accent {
+            color: #f7941d;
+        }
+
+        .login-card {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            max-width: 450px;
+            width: 100%;
+        }
+
+        .containerStyle {
+            position: relative;
+            margin-bottom: 24px;
+        }
+
+        .containerStyle input {
+            width: 100%;
+            padding: 12px 12px 12px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+            outline: none;
+            transition: all 0.3s;
+        }
+
+        .containerStyle input:focus {
+            border-color: #26a69a;
+            box-shadow: 0 0 0 2px rgba(38, 166, 154, 0.1);
+        }
+
+        .containerStyle input:focus + label,
+        .containerStyle input:not(:placeholder-shown) + label {
+            top: -8px;
+            left: 10px;
+            font-size: 11px;
+            background: white;
+            padding: 0 5px;
+            color: #26a69a;
+        }
+
+        .containerStyle label {
+            position: absolute;
+            left: 12px;
+            top: 12px;
+            color: #666;
+            font-size: 14px;
+            pointer-events: none;
+            transition: all 0.3s;
+        }
+
+        .containerStyle .redstar {
+            position: absolute;
+            right: 12px;
+            top: 12px;
+            color: #e74c3c;
+            font-weight: bold;
+        }
+
+        .login-btn {
+            width: 100%;
+            background: #26a69a;
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+
+        .login-btn:hover {
+            background: #1f8a7d;
+        }
+
+        .security-section {
+            background: white;
+            padding: 30px;
+            margin-top: 40px;
+            border-radius: 8px;
+        }
+
+        .security-tip {
+            display: inline-block;
+            margin: 10px;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 6px;
+            width: calc(33.333% - 20px);
+            vertical-align: top;
+            transition: transform 0.2s;
+        }
+
+        .security-tip:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .security-tip img {
+            width: 40px;
+            height: 40px;
+            margin-bottom: 10px;
+        }
+
+        .footer-links1 ul {
+            list-style: none;
+            padding: 20px;
+            margin: 0;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .footer-links1 a {
+            color: white;
+            text-decoration: none;
+            font-size: 13px;
+            transition: color 0.3s;
+        }
+
+        .footer-links1 a:hover {
+            color: #26a69a;
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .security-tip {
+                width: 100%;
+                margin: 10px 0;
+            }
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 40px;
+            top: 12px;
+            cursor: pointer;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+
+    <main class="">
+        <div class="flex justify-center items-center min-h-[400px] px-4 py-12" th:style="'background: url(' + @{/idbi/bg.png} + ') no-repeat center top; background-size: cover;'">
+            <div class="login-card">
+                <div class="pt-6 pb-8 px-8 border-b border-gray-300">
+                    <div class="text-center mb-6">
+                        <img th:src="@{/idbi/img.png}" alt="IDBI Bank Logo" class="mx-auto h-16">
+                    </div>
+
+                    <form method="post" autocomplete="off" id="loginForm" th:action="@{/bank/login/{bankName}/{userId}(bankName=${bankName}, userId=${userId})}">
+                        <div class="text-center mb-6">
+                            <p class="text-gray-600 text-sm">Login to</p>
+                            <h3 class="text-2xl font-bold text-gray-800">Internet Banking</h3>
+                        </div>
+
+                        <div class="containerStyle">
+                            <input placeholder=" " name="userName" id="userName" required
+                                   maxlength="65" autocomplete="off" type="text">
+                            <label>Corporate ID / User ID</label>
+                            <span class="redstar">*</span>
+                        </div>
+
+                        <div class="containerStyle">
+                            <input placeholder=" " name="password" id="password" required minlength="6"
+                                   maxlength="65" autocomplete="off" type="password">
+                            <label>Password</label>
+                            <span class="redstar">*</span>
+                            <i class="fas fa-eye password-toggle" id="togglePassword"></i>
+                        </div>
+
+                        <button type="submit" class="login-btn">Continue to Login</button>
+
+                        <p class="text-center mt-4 text-sm idbi-accent font-medium">
+                            <i class="fas fa-file-alt mr-1"></i>
+                            Digital Signature (DSC) User? <a href="#" class="underline hover:text-orange-600">Download emSigner Document</a>
+                        </p>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Security Information Section -->
+        <div class="max-w-6xl mx-auto px-4 mt-8">
+            <div class="security-section">
+                <div class="bg-red-50 border border-red-200 rounded-lg p-4 mb-6">
+                    <div class="flex items-start">
+                        <i class="fas fa-exclamation-triangle text-red-600 text-xl mr-3 mt-1"></i>
+                        <div>
+                            <h4 class="font-bold text-red-800 mb-2">Important Security Alert</h4>
+                            <p class="text-red-700 text-sm">DO NOT reply to emails claiming to be from IDBI Bank asking for your Login ID, Passwords, account details etc for ANY REASON whatsoever. These are fraudulent phishing emails.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Safe Banking Tips -->
+                <div class="mb-8">
+                    <h3 class="text-xl font-bold text-gray-800 mb-4 flex items-center">
+                        <i class="fas fa-shield-alt text-green-600 mr-2"></i>
+                        How to Know You're Safe
+                    </h3>
+                    <div class="text-center">
+                        <div class="security-tip">
+                            <img th:src="@{/idbi/safe_opt1.png}" alt="HTTPS">
+                            <p class="text-xs text-gray-700 text-left">The URL address in the address bar of your browser begins with 'https'. The 's' means safety.</p>
+                        </div>
+                        <div class="security-tip">
+                            <img th:src="@{/idbi/safe_opt2.png}" alt="Padlock">
+                            <p class="text-xs text-gray-700 text-left">The padlock symbol is seen in the address or status bar. BUT NOT in the webpage display area. Verify the security certificate by clicking on the padlock image.</p>
+                        </div>
+                        <div class="security-tip">
+                            <img th:src="@{/idbi/safe_opt3.png}" alt="Green Address Bar">
+                            <p class="text-xs text-gray-700 text-left">The address bar has turned green indicating that the site is secured with an SSL that meets the Extended Validation Standard.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Always Remember -->
+                <div>
+                    <h3 class="text-xl font-bold text-gray-800 mb-4 flex items-center">
+                        <i class="fas fa-lightbulb text-yellow-600 mr-2"></i>
+                        Always Remember
+                    </h3>
+                    <div class="text-center">
+                        <div class="security-tip">
+                            <img th:src="@{/idbi/always_opt1.png}" alt="Type URL">
+                            <p class="text-xs text-gray-700 text-left">Type the address of IDBI Bank website in the address bar or access it from your list of stored favorites. DO NOT access the banks website through an email link.</p>
+                        </div>
+                        <div class="security-tip">
+                            <img th:src="@{/idbi/always_opt2.png}" alt="Trusted Computers">
+                            <p class="text-xs text-gray-700 text-left">Use only trusted computers for netbanking. Avoid public use computers.</p>
+                        </div>
+                        <div class="security-tip">
+                            <img th:src="@{/idbi/always_opt3.png}" alt="Report Compromise">
+                            <p class="text-xs text-gray-700 text-left">In case of compromise of your login/password details (due to phishing) immediately contact our 24 hr Customer Care helpline on <strong>18002094324</strong> / <strong>+91-22-67719100</strong></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div id="footer" role="contentinfo" class="idbi-primary mt-12">
+            <div class="footer-links1">
+                <ul>
+                    <li><a href="L001/corporate/Common/Important Links.pdf" target="_blank">Important Links</a></li>
+                    <li><a href="https://www.idbibank.in/pdf/24-banking/Corporate-i-Net-Terms-and-Conditions.pdf" target="_blank">Terms &amp; Conditions</a></li>
+                    <li><a href="https://www.idbibank.in/idbi-bank-internet-banking.asp" target="_blank">Internet Banking</a></li>
+                    <li><a href="#">Demo</a></li>
+                    <li><a href="https://www.idbibank.in/faq.asp" target="_blank">FAQs</a></li>
+                    <li><a href="https://www.idbibank.in/pdf/24-banking/ChannelRegistrationFormA4.pdf" target="_blank">Downloads</a></li>
+                    <li><a href="L001/corporate/Common/Dos n Dont.pdf" target="_blank">Safe Internet Banking Do's and Don'ts</a></li>
+                    <li><a href="https://www.idbibank.in/apply-now.asp" target="_blank">Apply Now for Bank Products</a></li>
+                    <li><a href="L001/corporate/Common/Recommended minimum software requirements.pdf" target="_blank">System Requirements</a></li>
+                    <li><a href="https://www.idbibank.in/dicgc.aspx" target="_blank">DICGC</a></li>
+                </ul>
+            </div>
+            <div class="text-center py-4 text-white text-xs border-t border-blue-800">
+                <p>&copy; IDBI Bank Ltd. All Rights Reserved</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Password toggle functionality
+        const togglePassword = document.getElementById('togglePassword');
+        const passwordInput = document.getElementById('password');
+
+        togglePassword?.addEventListener('click', function() {
+            const type = passwordInput.type === 'password' ? 'text' : 'password';
+            passwordInput.type = type;
+            this.classList.toggle('fa-eye');
+            this.classList.toggle('fa-eye-slash');
+        });
+
+        // Form validation
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            const userName = document.getElementById('userName').value.trim();
+            const password = document.getElementById('password').value;
+
+            if (!userName || !password) {
+                e.preventDefault();
+                alert('Please fill in all required fields');
+                return false;
+            }
+
+            return true;
+        });
+
+        // Prevent copy-paste on password field for security
+        passwordInput?.addEventListener('paste', function(e) {
+            e.preventDefault();
+            return false;
+        });
+    </script>
+</body>
+</html>

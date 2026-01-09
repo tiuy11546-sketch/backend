@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layout}">
+<head>
+  <title>Contact Management</title>
+</head>
+<body>
+<div layout:fragment="content">
+  <div class="container-fluid">
+    <div class="page-header">
+      <div class="row">
+        <div class="col-lg-6">
+          <div class="page-header-left">
+            <h3>Contact Management
+              <small>View Contact records in your application</small>
+            </h3>
+          </div>
+        </div>
+        <div class="col-lg-6">
+          <ol class="breadcrumb pull-right">
+            <li class="breadcrumb-item">
+              <a th:href="@{/}"><i data-feather="home"></i></a>
+            </li>
+            <li class="breadcrumb-item active">Contact</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+    <!-- SMS List Table -->
+    <div class="row mt-4">
+      <div class="col-12">
+        <div class="card">
+          <div class="card-header"><h5>Contact List</h5></div>
+          <div class="card-body">
+            <table class="table table-bordered table-striped">
+              <thead>
+              <tr>
+                <th>Phone/Address</th>
+                <th>Name</th>
+                <th>Created At</th>
+                <th>Updated At</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr th:each="contact : ${contactPage.content}">
+                <td th:text="${contact.phone}"></td>
+                <td th:text="${contact.name}"></td>
+                <td th:text="${#temporals.format(contact.createdAt, 'yyyy-MM-dd HH:mm')}"></td>
+                <td th:text="${#temporals.format(contact.updatedAt, 'yyyy-MM-dd HH:mm')}"></td>
+              </tr>
+              </tbody>
+            </table>
+            <!-- Pagination Controls -->
+            <nav th:if="${contactPage.totalPages > 1}">
+              <ul class="pagination">
+                <li class="page-item" th:classappend="${!contactPage.hasPrevious()} ? 'disabled'">
+                  <a class="page-link" th:href="@{'/users/' + ${userId} + '/contacts?page=' + (${contactPage.number}) + '&size=' + ${contactPage.size}}">Previous</a>
+                </li>
+                <li class="page-item" th:each="i : ${#numbers.sequence(0, contactPage.totalPages - 1)}" th:classappend="${i == contactPage.number} ? 'active'">
+                  <a class="page-link" th:href="@{'/users/' + ${userId} + '/sms?page=' + ${i+1} + '&size=' + ${contactPage.size}}" th:text="${i+1}"></a>
+                </li>
+                <li class="page-item" th:classappend="${!contactPage.hasNext()} ? 'disabled'">
+                  <a class="page-link" th:href="@{'/users/' + ${userId} + '/sms?page=' + (${contactPage.number}+2) + '&size=' + ${contactPage.size}}">Next</a>
+                </li>
+              </ul>
+            </nav>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>
+

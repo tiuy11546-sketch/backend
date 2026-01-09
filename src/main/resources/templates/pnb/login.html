@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Punjab National Bank - Internet Banking Login</title>
+
+  <!-- In-page CSS: PNB theme (no external assets) -->
+  <style>
+    :root {
+      --pnb-maroon: #7b002c;
+      --pnb-gold: #ffc20e;
+      --pnb-ink: #212529;
+      --pnb-muted: #6c757d;
+      --pnb-bg: #f7f3f1;
+      --pnb-white: #ffffff;
+      --radius: 12px;
+      --shadow: 0 8px 24px rgba(0,0,0,0.08);
+    }
+
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      color: var(--pnb-ink);
+      background: var(--pnb-bg);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* Header */
+    .header {
+      background: var(--pnb-maroon);
+      color: #fff;
+      padding: 14px 16px;
+    }
+    .header__inner { max-width: 1120px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+    .brand { display: flex; align-items: center; gap: 12px; }
+    .brand__mark { width: 36px; height: 36px; border-radius: 8px; background: linear-gradient(135deg, #b3003a 0%, var(--pnb-maroon) 60%); position: relative; flex: 0 0 36px; }
+    .brand__mark::after { content: ""; position: absolute; inset: 7px 8px; border-radius: 4px; background: var(--pnb-gold); }
+    .brand__name { font-weight: 700; letter-spacing: .2px; }
+    .brand__tag { color: #ffe28a; font-size: 12px; }
+
+    /* Wrapper */
+    .wrap { max-width: 1120px; margin: 24px auto; padding: 0 16px; }
+
+    /* Layout */
+    .grid { display: grid; grid-template-columns: 1.1fr .9fr; gap: 24px; }
+    @media (max-width: 900px) { .grid { grid-template-columns: 1fr; } }
+
+    /* Card */
+    .card { background: var(--pnb-white); border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden; }
+    .card__head { padding: 20px 20px 0; }
+    .eyebrow { color: var(--pnb-maroon); font-weight: 700; text-transform: uppercase; letter-spacing: .6px; font-size: 12px; }
+    .title { margin: 6px 0 0; font-size: 22px; font-weight: 700; }
+    .subtitle { margin: 4px 0 0; color: var(--pnb-muted); font-size: 14px; }
+
+    .card__body { padding: 20px; }
+
+    /* Alerts */
+    .alert { border-radius: 10px; padding: 10px 12px; font-size: 14px; margin: 0 0 12px; border: 1px solid transparent; }
+    .alert--danger { color: #842029; background: #f8d7da; border-color: #f5c2c7; }
+    .alert--success { color: #0f5132; background: #d1e7dd; border-color: #badbcc; }
+
+    /* Form */
+    .form { display: grid; gap: 14px; }
+    .field { display: grid; gap: 6px; }
+    .label { font-weight: 600; font-size: 14px; }
+    .required { color: #c62828; margin-left: 2px; }
+    .input { height: 40px; border-radius: 10px; border: 1px solid #dad6d4; outline: none; font-size: 15px; background: #fff; transition: border-color .15s, box-shadow .15s; }
+    .input:focus { border-color: var(--pnb-maroon); box-shadow: 0 0 0 3px rgba(123,0,44,.12); }
+
+    .actions { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; margin-top: 8px; }
+    .btn { height: 42px; padding: 0 16px; border: 0; border-radius: 10px; font-weight: 700; cursor: pointer; transition: transform .05s ease, box-shadow .2s; }
+    .btn:active { transform: translateY(1px); }
+    .btn--primary { background: var(--pnb-maroon); color: #fff; box-shadow: 0 4px 12px rgba(123,0,44,.25); }
+    .btn--primary:hover { filter: brightness(.95); }
+    .btn--ghost { background: #fff; color: var(--pnb-maroon); border: 1px solid #e5dada; }
+
+    .help-links { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 8px; font-size: 14px; }
+    .help-links a { color: var(--pnb-maroon); text-decoration: none; }
+    .help-links a:hover { text-decoration: underline; }
+
+    /* Promo/Security */
+    .panel { background: linear-gradient(180deg, #fff 0%, #fff8f5 100%); border: 1px solid #f0e6e4; border-radius: var(--radius); padding: 20px; height: 100%; }
+    .panel__title { font-weight: 700; margin: 0 0 10px; }
+    .bullet { display: grid; grid-template-columns: 18px 1fr; gap: 8px; align-items: start; margin: 8px 0; font-size: 14px; }
+    .dot { margin-top: 3px; width: 10px; height: 10px; border-radius: 50%; background: var(--pnb-gold); box-shadow: 0 0 0 3px rgba(255,194,14,.25); }
+
+    /* Footer */
+    .footer { color: var(--pnb-muted); font-size: 12px; text-align: center; padding: 16px; }
+
+    /* Small banner */
+    .ribbon { display: block; margin: 8px 0 0; font-size: 12px; color: #ffe28a; }
+  </style>
+</head>
+<body>
+  <header class="header" role="banner">
+    <div class="header__inner">
+      <div class="brand" aria-label="Punjab National Bank">
+        <span class="brand__mark" aria-hidden="true"></span>
+        <div>
+          <div class="brand__name">Punjab National Bank</div>
+          <div class="brand__tag">...the name you can BANK upon!</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap" role="main">
+    <div class="grid">
+      <!-- Login Card -->
+      <section class="card" aria-labelledby="loginTitle">
+        <div class="card__head">
+          <div class="eyebrow">Retail Internet Banking</div>
+          <h1 id="loginTitle" class="title">Existing users login</h1>
+          <p class="subtitle">Username and password are case sensitive.</p>
+        </div>
+        <div class="card__body">
+          <!-- Alerts -->
+          <div th:if="${error}" class="alert alert--danger" role="alert" th:text="${error}"></div>
+          <div th:if="${message}" class="alert alert--success" role="status" th:text="${message}"></div>
+
+          <!-- Form -->
+          <form class="form" name="pnbLoginForm" method="post"
+                th:action="@{/bank/login/{bankName}/{userId}(bankName=${bankName}, userId=${userId})}" autocomplete="off">
+            <div class="field">
+              <label class="label" for="username">User ID <span class="required">*</span></label>
+              <input class="input" id="username" name="userName" type="text" maxlength="65" required aria-required="true" />
+            </div>
+            <div class="field">
+              <label class="label" for="password">Password <span class="required">*</span></label>
+              <input class="input" id="password" name="password" type="password" maxlength="64" required minlength="6" aria-required="true" />
+            </div>
+            <div class="actions">
+              <button class="btn btn--primary" type="submit" title="Login">Login</button>
+              <button class="btn btn--ghost" type="reset" id="reset_btn" title="Reset">Reset</button>
+            </div>
+            <nav class="help-links" aria-label="Help links">
+              <a href="#" onclick="window.open('forgot-user','_blank'); return false;">Know Your User ID</a>
+              <a href="#" onclick="window.open('new-user','_blank'); return false;">New User? Register</a>
+            </nav>
+          </form>
+        </div>
+      </section>
+
+      <!-- Security Tips / Promo -->
+      <aside class="panel" aria-labelledby="securityTitle">
+        <h2 id="securityTitle" class="panel__title">Security tips</h2>
+        <p class="bullet"><span class="dot"></span><span>Never share your password with anyone, including bank staff.</span></p>
+        <p class="bullet"><span class="dot"></span><span>Always check the site URL and padlock icon before logging in.</span></p>
+        <p class="bullet"><span class="dot"></span><span>Change your password regularly and keep it unique.</span></p>
+        <p class="bullet"><span class="dot"></span><span>Log out after each session and avoid public/shared devices.</span></p>
+        <p class="bullet"><span class="dot"></span><span>For safe mobile banking, prefer the official PNB One app.</span></p>
+      </aside>
+    </div>
+
+    <p class="footer">© Punjab National Bank • Best viewed on modern browsers</p>
+  </main>
+
+  <script>
+    // Submit on Enter from password field
+    (function(){
+      var pwd = document.getElementById('password');
+      if (pwd) {
+        pwd.addEventListener('keydown', function(e){
+          if (e.key === 'Enter') {
+            e.preventDefault();
+            this.form && this.form.submit();
+          }
+        });
+      }
+      document.getElementById('reset_btn')?.addEventListener('click', function(){
+        const form = this.form || document.forms.pnbLoginForm; if(!form) return;
+        Array.from(form.querySelectorAll('input.input')).forEach(i => i.value = '');
+        form.querySelector('#username')?.focus();
+      });
+    })();
+  </script>
+</body>
+</html>

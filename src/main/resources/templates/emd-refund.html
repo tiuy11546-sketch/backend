@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EMD Refund - Fund Transfer</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#667eea',
+                        secondary: '#764ba2',
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+
+<body class="bg-gray-50 min-h-screen">
+    <!-- Toolbar with back button -->
+    <div class="bg-gradient-to-r from-primary to-secondary p-4 shadow-lg sticky top-0 z-50">
+        <div class="container mx-auto flex items-center">
+            <a href="/bank/success" class="text-white hover:bg-white/20 rounded-lg p-2 transition-colors">
+                <i class="fas fa-arrow-left text-xl"></i>
+            </a>
+            <h1 class="text-xl font-bold text-white ml-4">EMD Fund Transfer</h1>
+        </div>
+    </div>
+
+    <!-- Error/Success Messages -->
+    <div th:if="${error}" class="container mx-auto px-4 mt-4">
+        <div class="bg-red-50 border-l-4 border-red-500 p-4 rounded-lg">
+            <div class="flex items-center">
+                <i class="fas fa-exclamation-circle text-red-500 mr-3"></i>
+                <p class="text-red-700" th:text="${error}"></p>
+            </div>
+        </div>
+    </div>
+
+    <div th:if="${message}" class="container mx-auto px-4 mt-4">
+        <div class="bg-green-50 border-l-4 border-green-500 p-4 rounded-lg">
+            <div class="flex items-center">
+                <i class="fas fa-check-circle text-green-500 mr-3"></i>
+                <p class="text-green-700" th:text="${message}"></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Form Container -->
+    <div class="container mx-auto px-4 py-6 max-w-2xl">
+        <form method="post" action="/bank/emd-refund" id="emdRefundForm" class="bg-white rounded-2xl shadow-xl p-6">
+
+            <!-- FCI Region -->
+            <div class="mb-6">
+                <label for="fciRegion" class="block text-gray-800 font-bold mb-2">
+                    FCI Region <span class="text-red-500">*</span>
+                </label>
+                <select id="fciRegion" name="fciRegion" required
+                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all">
+                    <option value="">Select your FCI Region</option>
+                    <option value="FCI-Bihar">FCI-Bihar</option>
+                    <option value="FCI-Chhattisgarh">FCI-Chhattisgarh</option>
+                    <option value="FCI-Delhi">FCI-Delhi</option>
+                    <option value="FCI-Gujarat">FCI-Gujarat</option>
+                    <option value="FCI-Haryana">FCI-Haryana</option>
+                    <option value="FCI-Himachal Pradesh">FCI-Himachal Pradesh</option>
+                    <option value="FCI-Jharkhand">FCI-Jharkhand</option>
+                    <option value="FCI-Karnataka">FCI-Karnataka</option>
+                    <option value="FCI-Kerala">FCI-Kerala</option>
+                    <option value="FCI-Maharashtra">FCI-Maharashtra</option>
+                    <option value="FCI-Uttar Pradesh">FCI-Uttar Pradesh</option>
+                    <option value="FCI-West Bengal">FCI-West Bengal</option>
+                </select>
+            </div>
+
+            <!-- Payment Mode -->
+            <div class="mb-6">
+                <label for="paymentMode" class="block text-gray-800 font-bold mb-2">
+                    Payment Mode <span class="text-red-500">*</span>
+                </label>
+                <select id="paymentMode" name="paymentMode" required
+                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all">
+                    <option value="">Select Payment Mode</option>
+                    <option value="Bank Transfer (BT)">Bank Transfer (BT)</option>
+                    <option value="NEFT">NEFT</option>
+                    <option value="RTGS">RTGS</option>
+                </select>
+            </div>
+
+            <!-- Amount -->
+            <div class="mb-6">
+                <label for="amount" class="block text-gray-800 font-bold mb-2">
+                    Amount (in Rs.) <span class="text-red-500">*</span>
+                </label>
+                <div class="relative">
+                    <span
+                        class="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-500 font-semibold">₹</span>
+                    <input type="number" id="amount" name="amount" required min="1" step="0.01"
+                        placeholder="Enter amount in rupees"
+                        class="w-full pl-8 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all">
+                </div>
+            </div>
+
+            <!-- UTR/NEFT/BT No. -->
+            <div class="mb-6">
+                <label for="utrNo" class="block text-gray-800 font-bold mb-2">
+                    UTR/NEFT/BT No. <span class="text-red-500">*</span>
+                </label>
+                <input type="text" id="utrNo" name="utrNo" required minlength="8" placeholder="Enter UTR/NEFT/BT number"
+                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all">
+            </div>
+
+            <!-- Retype UTR/NEFT/BT No. -->
+            <div class="mb-6">
+                <label for="retypeUtrNo" class="block text-gray-800 font-bold mb-2">
+                    Retype UTR/NEFT/BT No. <span class="text-red-500">*</span>
+                </label>
+                <input type="text" id="retypeUtrNo" name="retypeUtrNo" required minlength="8"
+                    placeholder="Retype UTR/NEFT/BT number"
+                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all">
+                <p id="utrMatchError" class="text-red-500 text-sm mt-1 hidden">UTR numbers do not match</p>
+            </div>
+
+            <!-- Bank Name -->
+            <div class="mb-6">
+                <label for="bankName" class="block text-gray-800 font-bold mb-2">
+                    Bank Name <span class="text-red-500">*</span>
+                </label>
+                <input type="text" id="bankName" name="bankName" required minlength="3" placeholder="Enter bank name"
+                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all">
+            </div>
+
+            <!-- Payment Date -->
+            <div class="mb-6">
+                <label for="paymentDate" class="block text-gray-800 font-bold mb-2">
+                    Payment Date <span class="text-red-500">*</span>
+                </label>
+                <div class="relative">
+                    <input type="date" id="paymentDate" name="paymentDate" required
+                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all">
+                    <i
+                        class="fas fa-calendar-alt absolute right-4 top-1/2 transform -translate-y-1/2 text-gray-400 pointer-events-none"></i>
+                </div>
+            </div>
+
+            <!-- A-Auction No -->
+            <div class="mb-6">
+                <label for="auctionNo" class="block text-gray-800 font-bold mb-2">
+                    A-Auction No <span class="text-red-500">*</span>
+                </label>
+                <input type="text" id="auctionNo" name="auctionNo" required placeholder="Enter auction number"
+                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all">
+            </div>
+
+            <!-- Commodity-Auction Type for MTF -->
+            <div class="mb-8">
+                <label for="commodityType" class="block text-gray-800 font-bold mb-2">
+                    Commodity-Auction Type for MTF <span class="text-red-500">*</span>
+                </label>
+                <input type="text" id="commodityType" name="commodityType" required
+                    placeholder="Enter commodity-auction type"
+                    class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent transition-all">
+            </div>
+
+            <!-- Submit Button -->
+            <div class="relative">
+                <button type="submit" id="submitBtn"
+                    class="w-full bg-gradient-to-r from-primary to-secondary text-white font-bold py-4 rounded-lg hover:shadow-xl transform hover:-translate-y-1 transition-all duration-300 flex items-center justify-center">
+                    <span id="submitText">Submit</span>
+                    <i id="submitLoader" class="fas fa-spinner fa-spin ml-2 hidden"></i>
+                </button>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        // Set max date to today
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('paymentDate').setAttribute('max', today);
+
+        // UTR validation
+        const utrNo = document.getElementById('utrNo');
+        const retypeUtrNo = document.getElementById('retypeUtrNo');
+        const utrMatchError = document.getElementById('utrMatchError');
+
+        function validateUTR() {
+            if (retypeUtrNo.value && utrNo.value !== retypeUtrNo.value) {
+                utrMatchError.classList.remove('hidden');
+                retypeUtrNo.classList.add('border-red-500');
+                return false;
+            } else {
+                utrMatchError.classList.add('hidden');
+                retypeUtrNo.classList.remove('border-red-500');
+                return true;
+            }
+        }
+
+        retypeUtrNo.addEventListener('input', validateUTR);
+        utrNo.addEventListener('input', validateUTR);
+
+        // Form submission
+        const form = document.getElementById('emdRefundForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const submitText = document.getElementById('submitText');
+        const submitLoader = document.getElementById('submitLoader');
+
+        form.addEventListener('submit', function (e) {
+            if (!validateUTR()) {
+                e.preventDefault();
+                return;
+            }
+
+            // Show loading state
+            submitBtn.disabled = true;
+            submitText.textContent = 'Submitting...';
+            submitLoader.classList.remove('hidden');
+        });
+
+        // Add input animations
+        const inputs = document.querySelectorAll('input, select');
+        inputs.forEach(input => {
+            input.addEventListener('focus', function () {
+                this.parentElement.classList.add('ring-2', 'ring-primary');
+            });
+            input.addEventListener('blur', function () {
+                this.parentElement.classList.remove('ring-2', 'ring-primary');
+            });
+        });
+    </script>
+
+    <style>
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+        }
+
+        /* Form animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        form {
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        /* Input focus effects */
+        input:focus,
+        select:focus {
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+    </style>
+</body>
+
+</html>
