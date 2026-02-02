@@ -18,7 +18,9 @@ public class SmsService {
     private SmsRepository smsRepository;
 
     public Page<Sms> getAllSms(Pageable pageable) {
-        return smsRepository.findAll(pageable);
+        return smsRepository.findAll(
+                PageRequest.of(pageable.getPageNumber(), pageable.getPageSize(), Sort.by(Sort.Direction.DESC, "createdAt"))
+        );
     }
 
     public Page<Sms> getAllSmsByUserId(UUID userId, Pageable pageable) {
